@@ -1,5 +1,5 @@
 Import('env')
-env_lua = env.Copy()
+env_lua = env.Clone()
 env_lua.Append(CPPPATH=['#lua/include', '#lua/tolua++/include'])
 
 if env['lua_number_type'] == "float":

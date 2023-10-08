@@ -27,7 +27,7 @@ for x in glob.glob("build/*"):
 	sys.modules.pop('detect')
 			
 		
-print platform_list	
+print(platform_list)
 
 import methods
 scanners = Environment().Dictionary('SCANNERS')
@@ -50,7 +50,7 @@ env_native.__class__.LuaBinding = methods.make_tolua_code
 env_native.__class__.add_source_files = methods.add_source_files
 env_native.has_tolua_target = False
 
-opts=Options(['custom.py'], ARGUMENTS)
+opts=Variables(['custom.py'], ARGUMENTS)
 opts.Add('optimize', 'Optimize (0|1).', 0)
 opts.Add('profile', 'Profile (0|1).', 0)
 opts.Add('debug', 'Add debug symbols (0|1).', 1)

@@ -2,7 +2,7 @@ Import('env')
 
 collada_so = False
 
-env_collada = env.Copy()
+env_collada = env.Clone()
 env_collada.Append(CPPPATH=['#tools/FCollada', '#tools/FCollada/LibXML/include'])
 env_collada.Append(CPPFLAGS=['-D_DEBUG']) #, '-DFCOLLADA_DLL'])
 

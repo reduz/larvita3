@@ -18,7 +18,7 @@ def add_source_files(self, library, filetype, lib_env = None, shared = False):
 	lib_list = library
 	if type(lib_list) == type(""):
 		
-		if (not lib_env.lib_objects.has_key(library)):
+		if (library not in lib_env.lib_objects):
 			lib_env.lib_objects[library]=[]
 			lib_env.lib_link_order=[library]+lib_env.lib_link_order
 		lib_list = lib_env.lib_objects[library]
@@ -230,7 +230,7 @@ def run_macro(target, source, env):
 def build_shader_header( target, source, env ): 
 	
 	for x in source:
-		print x
+		print(x)
 		
 		name = str(x)
 		name = name[ name.rfind("/")+1: ]
