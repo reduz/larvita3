@@ -2,3 +2,5 @@
 __pycache__
 *.o
 *.a
+*.so
+bin/script_exec
