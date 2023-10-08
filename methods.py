@@ -37,7 +37,7 @@ def pkg_scan_func(node, env, path):
 	import os
 	if str(node)[-4:] != ".pkg":
 		return []
-	dep_list = pkg_re.findall(node.get_contents())
+	dep_list = pkg_re.findall(node.get_contents().decode('utf-8'))
 	i=0
 	def repl(s):
 		if env.has_key(s.group(1)):
