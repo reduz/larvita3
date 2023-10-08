@@ -68,7 +68,7 @@ opts.Add('GAME_BINDINGS', 'Game bindings', "")
 
 opts.Add('enable_collada', 'Enable collada', True)
 opts.Add('enable_postgres', 'Enable postgres', False)
-opts.Add('enable_ssl', 'Enable ssl', True)
+opts.Add('enable_ssl', 'Enable ssl', False)
 opts.Add('enable_glew', 'Use glew instead lf GLee', False)
 
 env_native['TOLUA_PROGSUFFIX'] = env_native['PROGSUFFIX']
