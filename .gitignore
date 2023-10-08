@@ -1,2 +1,4 @@
 .sconsign.dblite
 __pycache__
+*.o
+*.a
