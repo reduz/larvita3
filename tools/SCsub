@@ -1,0 +1,10 @@
+Import('env')
+
+#env.add_source_files("tools","*.cpp")
+
+Export('env')
+
+SConscript('editor/SCsub');
+if (env["enable_collada"]==1):
+	SConscript('FCollada/SCsub');
+

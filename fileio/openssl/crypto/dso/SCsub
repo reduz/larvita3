@@ -1,0 +1,17 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'dso_dl.c',
+	'dso_dlfcn.c',
+	'dso_err.c',
+	'dso_lib.c',
+	'dso_null.c',
+	'dso_openssl.c',
+	'dso_win32.c',
+	'dso_vms.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

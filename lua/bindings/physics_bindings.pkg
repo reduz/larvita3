@@ -1,0 +1,37 @@
+
+$ifile "physics/physics_body.h"
+$ifile "physics/static_body.h"
+$ifile "physics/rigid_body.h"
+$ifile "physics/physics_world_settings.h"
+$ifile "physics/character_body.h"
+$ifile "physics/physics.h"
+
+class Physics {
+
+public:
+
+	tolua_outside Vector3 Physics_intersect_volume_and_fetch_separation @ intersect_volume_and_fetch_separation(IRef<Volume> p_volume,const Matrix4& p_transform, const Vector3& p_motion, Uint32 p_flags=PhysicsBody::FLAGS_ALL);
+
+};
+
+${
+
+static Vector3 Physics_intersect_volume_and_fetch_separation(Physics* p_physics, IRef<Volume> p_volume,const Matrix4& p_transform, const Vector3& p_motion, Uint32 p_flags=PhysicsBody::FLAGS_ALL) {
+
+	static const int ccount = 32;
+	BroadPhase::ContactData cd[ccount];
+	int count = 0;
+	
+	p_physics->intersect_volume_and_fetch_contacts(p_volume, p_transform, p_motion, cd, &count, ccount , p_flags);
+
+	Vector3 ret;
+	for (int i=0; i<count; i++) {
+	
+		ret += cd[i].dir;
+	};
+
+	return ret;
+};
+
+$}
+

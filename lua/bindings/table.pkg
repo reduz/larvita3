@@ -1,0 +1,49 @@
+
+class Table {
+
+	TOLUA_TEMPLATE_BIND(TKey TData, $TYPE_LIST);
+
+public:
+
+	struct Pair {
+			
+		TKey key;
+		TData data;
+		
+		Pair() {}
+		Pair(const TKey& p_key, const TData& p_data) { key=p_key; data=p_data; }
+	};
+
+	void set( const TKey& p_key, const TData& p_data );
+	void set( const Pair& p_pair );
+	
+	bool has( const TKey& p_key ) const;
+	const TData& get( const TKey& p_key ) const;
+	
+	/**
+	 * Same as get, except it can return NULL when item was not found.
+	 * This is mainly used for speed purposes.
+	 */
+	const TData* getptr( const TKey& p_key ) const;
+	
+	/**
+	 * Erase an item, return true if erasing was succesful
+	 */
+	bool erase( const TKey& p_key );
+	
+	//const TData& operator[](const TKey& p_key) const;
+	
+	//TData& operator[](const TKey& p_key );
+	
+	
+	unsigned int size() const;
+	
+	bool empty() const;
+	
+	void clear();
+	
+	Table();
+	Table(const Table<TKey, TData>& p_table);
+	
+	~Table();
+};

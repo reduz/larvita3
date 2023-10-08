@@ -1,0 +1,22 @@
+Import('env')
+
+tremor_sources = [
+	"bitwise.c",
+	"codebook.c",
+	"dsp.c",
+	"floor0.c",
+	"floor1.c",
+	"floor_lookup.c",
+	"framing.c",
+	"info.c",
+	"mapping0.c",
+	"mdct.c",
+	"misc.c",
+	"res012.c",
+	"vorbisfile.c",
+	]
+
+
+
+
+env.add_source_files("core", tremor_sources)

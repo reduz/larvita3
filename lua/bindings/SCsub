@@ -1,0 +1,22 @@
+Import("env_lua")
+
+lua_bindings_objects = ['lua_signal_handler.cpp', 'gui_signal_timer.cpp']
+
+name = "bindings"
+
+if env_lua['game']:
+	env_lua['GAME_BINDINGS'] = env_lua['game'] + '/game_bindings.pkg'
+	name = name + "_" + env_lua['game']
+	
+tolua = env_lua.LuaBinding(name + env_lua['TOLUA_OUTSUFFIX'], 'bindings.pkg', 'larvita', custom_script = 'lua/bindings/hooks.lua', list = "lua")
+if tolua:
+	env_lua.Depends(tolua, 'signal_hooks.lua')
+	#if env_lua['game']:
+	#	import methods
+	#	env_lua.Depends(tolua, methods.pkg_scan_func(File('#' + env_lua['game'] + '/game_bindings.pkg'), None, None))
+	#SideEffect('lua_signal_handlers_larvita.h', tolua)
+
+env_lua.add_source_files("lua", lua_bindings_objects)
+
+#env_lua.Library('lua_bindings', lua_bindings_objects)
+

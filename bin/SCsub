@@ -1,0 +1,7 @@
+Import('env')
+Export('env')
+
+
+SConscript("tests/SCsub");
+SConscript("libs/SCsub");
+

@@ -1,0 +1,7 @@
+Import('env');
+Export('env');
+
+targets=['box_container.cpp','scroll_container.cpp','stack_container.cpp','fixed_container.cpp','grid_container.cpp','center_container.cpp'];
+
+for x in targets:
+	env.gui_objects += [env.Object(x)]

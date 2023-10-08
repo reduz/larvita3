@@ -1,0 +1,6 @@
+Import('env')
+
+env.add_source_files("engine","*.cpp")
+
+Export('env')
+

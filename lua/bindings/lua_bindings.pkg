@@ -1,0 +1,93 @@
+$ifile "lua/lua_manager.h"
+
+$ifile "lua/bindings/lua_signal_handler.h"
+
+${
+/* method: load_file of class  LuaManager */
+#define TOLUA_DISABLE_tolua_larvita_LuaManager_load_file00
+static int tolua_larvita_LuaManager_load_file00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"LuaManager",0,&tolua_err) ||
+     !tolua_isrstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isrstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  LuaManager* self = (LuaManager*)  tolua_tousertype(tolua_S,1,0);
+  lua_State* L =  tolua_S;
+  String p_fname = ((String)  tolua_torstring(tolua_S,2,0));
+  String error = ((String)  tolua_torstring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '%s'", NULL);
+#endif
+  {
+   Error tolua_ret = (Error)  self->load_file(L,p_fname,error);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   if (tolua_ret != OK) {
+   	 tolua_pushrstring(tolua_S,(const char*)error);
+   } else {
+     lua_insert(tolua_S, -2);
+   };
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '%s'.",&tolua_err);
+ return 0;
+#endif
+}
+
+
+#define TOLUA_DISABLE_tolua_larvita_LuaManager_load_buffer00
+static int tolua_larvita_LuaManager_load_buffer00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"LuaManager",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const DVector<Uint8>",0,&tolua_err)) ||
+     !tolua_isrstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isrstring(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  LuaManager* self = (LuaManager*)  tolua_tousertype(tolua_S,1,0);
+  lua_State* L =  tolua_S;
+  const DVector<Uint8>* p_vector = ((const DVector<Uint8>*)  tolua_tousertype(tolua_S,2,0));
+  String p_name = ((String)  tolua_torstring(tolua_S,3,0));
+  String error = ((String)  tolua_torstring(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '%s'", NULL);
+#endif
+  {
+   Error tolua_ret = (Error)  self->load_buffer(L,*p_vector,p_name,error);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   if (tolua_ret != OK) {
+   	 tolua_pushrstring(tolua_S,(const char*)error);
+   } else {
+     lua_insert(tolua_S, -2);
+   };
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '%s'.",&tolua_err);
+ return 0;
+#endif
+}
+
+$}
+
+$ifile "lua/lua_iapi_factory.h"
+

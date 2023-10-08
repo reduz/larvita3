@@ -1,0 +1,109 @@
+$ifile "render/texture.h"
+$ifile "render/material.h"
+$ifile "render/skeleton.h"
+$ifile "render/surface.h"
+$ifile "render/mesh.h"
+$ifile "render/light.h"
+$ifile "render/spatial_indexer.h"
+
+class Material {
+	TOLUA_NO_CONSTRUCTOR;
+};
+
+// render
+$ifile "render/renderer.h"
+
+${
+
+#define TOLUA_DISABLE_tolua_larvita_Renderer_render_primitive00
+static int tolua_larvita_Renderer_render_primitive00(lua_State* tolua_S)
+{
+
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Renderer",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_istable(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,8,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Renderer* self = (Renderer*)  tolua_tousertype(tolua_S,1,0);
+  int p_points = ((int)  tolua_tonumber(tolua_S,2,0));
+
+  ERR_FAIL_COND_V(p_points > 4, 0);
+
+  int arrtop = lua_gettop(tolua_S) + 1;
+
+  if (!tolua_isusertypearray(tolua_S,3,"Vector3",p_points,0,&tolua_err)) {
+	goto tolua_lerror;
+  };
+  Vector3 p_vertices[4];
+  for (int i=0; i<p_points; i++) {
+  
+  	lua_rawgeti(tolua_S, 3, i+1);
+	p_vertices[i] = *(Vector3*)tolua_tousertype(tolua_S, arrtop, 0);
+	lua_pop(tolua_S, 1);
+  };
+
+  Vector3* p_normals = NULL;
+  Vector3 narr[4];
+  if (tolua_isusertypearray(tolua_S,4,"Vector3",p_points,0,&tolua_err)) {
+  	p_normals = narr;
+	for (int i=0; i<p_points; i++) {
+	
+  		lua_rawgeti(tolua_S, 4, i+1);
+		p_normals[i] = *(Vector3*)tolua_tousertype(tolua_S, arrtop, 0);
+		lua_pop(tolua_S, 1);
+	};
+  };
+
+
+  Vector3* p_binormals_and_tangents = NULL;
+  Vector3 bin_arr[8];
+  if (tolua_isusertypearray(tolua_S,5,"Vector3",p_points*2,0,&tolua_err)) {
+  	p_binormals_and_tangents = bin_arr;
+	for (int i=0; i<p_points*2; i++) {
+	
+  		lua_rawgeti(tolua_S, 5, i+1);
+		p_binormals_and_tangents[i] = *(Vector3*)tolua_tousertype(tolua_S, arrtop, 0);
+		lua_pop(tolua_S, 1);
+	};
+  };
+
+  Color* p_colors = NULL;
+  Color carr[4];
+  if (tolua_isusertypearray(tolua_S,6,"Color",p_points,0,&tolua_err)) {
+  	p_colors = carr;
+	for (int i=0; i<p_points; i++) {
+	
+  		lua_rawgeti(tolua_S, 6, i+1);
+		p_colors[i] = *(Color*)tolua_tousertype(tolua_S, arrtop, 0);
+		lua_pop(tolua_S, 1);
+	};
+  };
+  
+  float* p_uv = NULL;
+  float uvarr[8];
+  if (tolua_isnumberarray(tolua_S, 7, p_points, 0, &tolua_err)) {
+  	p_uv = uvarr;
+	for (int i=0; i<p_points*2; i++) {
+	
+  		lua_rawgeti(tolua_S, 7, i+1);
+		p_uv[i] = tolua_tonumber(tolua_S, arrtop, 0);
+		lua_pop(tolua_S, 1);
+	};
+  };
+  
+  self->render_primitive(p_points,p_vertices,p_normals,p_binormals_and_tangents,p_colors,p_uv);
+ }
+ return 0;
+tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'render_primitive'.",&tolua_err);
+ return 0;
+}
+
+$}
+
+

@@ -1,0 +1,17 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'aes_misc.c',
+	'aes_ecb.c',
+	'aes_cfb.c',
+	'aes_ofb.c',
+	'aes_ctr.c',
+	'aes_ige.c',
+	'aes_core.c',
+	'aes_cbc.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

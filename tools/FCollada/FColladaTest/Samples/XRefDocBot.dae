@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <created>2007-12-17T17:02:47Z</created>
+    <modified>2007-12-17T17:02:47Z</modified>
+  </asset>
+  <library_cameras>
+    <camera id="Camera">
+      <optics>
+        <technique_common>
+          <orthographic>
+            <xmag>2</xmag>
+            <aspect_ratio>1</aspect_ratio>
+            <znear>1</znear>
+            <zfar>1000</zfar>
+          </orthographic>
+        </technique_common>
+      </optics>
+    </camera>
+  </library_cameras>
+</COLLADA>

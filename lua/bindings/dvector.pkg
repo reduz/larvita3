@@ -1,0 +1,27 @@
+$#include "types/dvector.h"
+
+class DVector {
+
+	TOLUA_TEMPLATE_BIND(T, $TYPE_LIST);
+public:
+
+	void clear();
+	int size() const;
+	Error resize(int p_size);
+	bool push_back(T p_elem);
+	const T operator[](int p_index) const;
+
+	void remove(int p_index);
+
+	//int find(const T& p_val) const;
+
+	void set(int p_index,T p_elem);
+	T get(int p_index) const;
+
+	inline bool is_locked() const;
+	
+	DVector(const DVector<T>& p_from);
+
+	DVector();
+	~DVector();
+};

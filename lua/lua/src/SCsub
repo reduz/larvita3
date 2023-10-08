@@ -1,0 +1,45 @@
+Import('env')
+Import('env_lua')
+Import('env_native')
+
+sources = [
+	'lapi.c',
+	'lauxlib.c',
+	'lbaselib.c',
+	'lcode.c',
+	'ldblib.c',
+	'ldebug.c',
+	'ldo.c',
+	'ldump.c',
+	'lfunc.c',
+	'lgc.c',
+	'linit.c',
+	'llex.c',
+	'lmathlib.c',
+	'lmem.c',
+	'loadlib.c',
+	'lobject.c',
+	'lopcodes.c',
+	'lparser.c',
+	'lstate.c',
+	'lstring.c',
+	'lstrlib.c',
+	'ltable.c',
+	'ltablib.c',
+	'ltm.c',
+#	'lua.c',
+#	'luac.c',
+	'lundump.c',
+	'lvm.c',
+	'lzio.c',
+	'print.c',
+	'loslib.c',
+	'liolib.c',
+]
+
+env_lua.add_source_files("lua", sources, lib_env=env)
+
+if not env_native.has_tolua_target:
+	env_native.add_source_files("lua_native", sources)
+
+

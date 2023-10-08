@@ -1,0 +1,33 @@
+// fileio
+
+$ifile "fileio/sql_client.h"
+$ifile "fileio/sql_client_sqlite.h"
+##if POSTGRES_ENABLED then
+$ifile "fileio/sql_client_postgres.h"
+##end
+$ifile "fileio/iapi_db_sql.h"
+
+$ifile "fileio/image_loader.h"
+//$ifile "fileio/database_fs.h"
+
+$ifile "fileio/iapi_db_file.h"
+
+$ifile "fileio/config_file.h"
+$ifile "fileio/config_api.h"
+
+$ifile "fileio/audio_loader.h"
+
+$ifile "fileio/png_mem_compress.h"
+
+$ifile "fileio/serializer.h"
+$ifile "fileio/deserializer.h"
+
+$ifile "fileio/serializer_file.h"
+$ifile "fileio/deserializer_file.h"
+
+$ifile "fileio/md5sum.h"
+
+$ifile "fileio/iapi_data.h"
+$ifile "fileio/file_helpers.h"
+
+$ifile "fileio/animation_loader.h"

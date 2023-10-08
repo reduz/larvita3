@@ -1,0 +1,35 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'set_key.c',
+	'ecb_enc.c',
+	'cbc_enc.c',
+	'ecb3_enc.c',
+	'cfb64enc.c',
+	'cfb64ede.c',
+	'cfb_enc.c',
+	'ofb64ede.c',
+	'enc_read.c',
+	'enc_writ.c',
+	'ofb64enc.c',
+	'ofb_enc.c',
+	'str2key.c',
+	'pcbc_enc.c',
+	'qud_cksm.c',
+	'rand_key.c',
+	'des_enc.c',
+	'fcrypt_b.c',
+	'fcrypt.c',
+	'xcbc_enc.c',
+	'rpc_enc.c',
+	'cbc_cksm.c',
+	'ede_cbcm_enc.c',
+	'des_old.c',
+	'des_old2.c',
+	'read2pwd.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

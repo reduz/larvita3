@@ -1,0 +1,122 @@
+
+// base
+$ifile "gui/base/geometry.h"
+$ifile "gui/base/skin.h"
+$ifile "gui/base/defs.h"
+$ifile "gui/base/painter.h"
+$ifile "gui/base/timer.h"
+$ifile "gui/base/file_system.h"
+
+namespace GUI {
+
+	class FileSystem {
+
+	public:
+		static tolua_outside bool GUIFS_has_instance_func @ has_instance_func();
+	};
+};
+
+${
+
+bool GUIFS_has_instance_func() {
+
+	return GUI::FileSystem::instance_func != 0;
+};
+$}
+
+
+$ifile "gui/base/frame.h"
+$ifile "gui/base/widget.h"
+$ifile "gui/base/container.h"
+
+//$ifile "gui/base/keyboard.h"
+$ifile "gui/base/style_box.h"
+$ifile "gui/base/range.h"
+
+//$ifile "gui/base/desktop.h"
+$ifile "gui/base/window.h"
+
+// containers
+$ifile "gui/containers/box_container.h"
+$ifile "gui/containers/fixed_container.h"
+$ifile "gui/containers/scroll_container.h"
+$ifile "gui/containers/center_container.h"
+$ifile "gui/containers/grid_container.h"
+$ifile "gui/containers/stack_container.h"
+
+namespace GUI {
+	class VBoxContainer {
+	protected:
+		virtual const StyleBox& stylebox(int p_type);
+	};
+	class BoxContainer {
+	protected:
+		virtual const StyleBox& stylebox(int p_type);
+	};
+	class StackContainer {
+	protected:
+		virtual const StyleBox& stylebox(int p_type);
+	};
+	class FixedContainer {
+	public:
+
+		virtual void resize(const Size& p_new_size); 	
+	};	
+};
+
+// widgets
+$ifile "gui/widgets/base_button.h"
+$ifile "gui/widgets/button.h"
+$ifile "gui/widgets/arrow_button.h"
+$ifile "gui/widgets/icon.h"
+$ifile "gui/widgets/tab_bar.h"
+$ifile "gui/widgets/window_top.h"
+$ifile "gui/widgets/label.h"
+$ifile "gui/widgets/custom_label.h"
+$ifile "gui/widgets/bitmap_button.h"
+$ifile "gui/widgets/range_owner.h"
+$ifile "gui/widgets/progress_bar.h"
+$ifile "gui/widgets/text_edit.h"
+$ifile "gui/widgets/text_view.h"
+$ifile "gui/widgets/line_edit.h"
+$ifile "gui/widgets/scroll_bar.h"
+$ifile "gui/widgets/updown.h"
+$ifile "gui/widgets/button_group.h"
+$ifile "gui/widgets/list.h"
+$ifile "gui/widgets/tree.h"
+$ifile "gui/widgets/separator.h"
+$ifile "gui/widgets/value_label.h"
+$ifile "gui/widgets/check_button.h"
+$ifile "gui/widgets/menu_button.h"
+$ifile "gui/widgets/slider.h"
+$ifile "gui/widgets/window_button.h"
+
+
+// bundles
+$ifile "gui/bundles/combo_box.h"
+$ifile "gui/bundles/menu_bar.h"
+
+
+$ifile "gui/bundles/option_box.h"
+$ifile "gui/bundles/tab_box.h"
+$ifile "gui/bundles/file_dialog.h"
+$ifile "gui/bundles/menu_box.h"
+$ifile "gui/bundles/popup_menu.h"
+$ifile "gui/bundles/window_box.h"
+$ifile "gui/bundles/margin_group.h"
+$ifile "gui/bundles/message_box.h"
+$ifile "gui/bundles/spin_box.h"
+$ifile "gui/bundles/input_dialog.h"
+$ifile "gui/bundles/scroll_box.h"
+$ifile "gui/bundles/color_picker.h"
+$ifile "gui/bundles/list_box.h"
+
+namespace GUI {
+class Button {
+protected:
+	virtual const StyleBox& stylebox(int p_which); ///< Get a certain stylebox, from the enum. Override to create specific custom looking widgets.
+};
+};
+
+$ifile "lua/bindings/gui_signal_timer.h"
+

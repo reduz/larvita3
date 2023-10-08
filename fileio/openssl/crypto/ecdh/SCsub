@@ -1,0 +1,13 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'ech_lib.c',
+	'ech_ossl.c',
+	'ech_key.c',
+	'ech_err.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

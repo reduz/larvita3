@@ -1,0 +1,107 @@
+##if FLOAT_T_IS_DOUBLE then
+	typedef double real_t;
+##else
+	typedef float real_t;
+##end
+
+$ifile "types/error_list.h"
+$hfile "types/variant.h"
+class Variant {
+public:
+	Variant(Type p_type,int p_len);
+};
+
+$ifile "lua/bindings/dvector.pkg", tmpl, real_t, int, Variant, Uint8
+
+$hfile "types/iapi/iobj.h"
+
+$hfile "types/iapi/iapi.h"
+class IAPI {
+
+public:
+
+	tolua_outside void IAPI_call_changed_signal @ call_changed_signal (String p_path = "");
+};
+
+${
+
+#define TOLUA_DISABLE_tolua_larvita_IAPI_call00
+static int tolua_larvita_IAPI_call00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"IAPI",0,&tolua_err) ||
+     !tolua_isrstring(tolua_S,2,0,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  IAPI* self = (IAPI*)  tolua_tousertype(tolua_S,1,0);
+  String p_method = ((String)  tolua_torstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'call'",NULL);
+#endif
+  int top = lua_gettop(tolua_S);
+  List<Variant> list;
+  for (int i=3; i<=top; i++) {
+  
+  	if (!tolua_isVariant(tolua_S, i, 0, &tolua_err)) {
+		goto tolua_lerror;
+	};
+  	list.push_back(tolua_toVariant(tolua_S, i, 0));
+  };
+  {
+   Variant tolua_ret = (Variant)  self->call(p_method, list);
+   tolua_pushVariant(tolua_S,(Variant)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'call'.",&tolua_err);
+ return 0;
+#endif
+}
+
+static void IAPI_call_changed_signal(IAPI* p_iapi, String p_path = "") {
+
+	p_iapi->property_changed_signal.call(p_path);
+};
+
+$}
+
+class IRefBase;
+class IRef : public IRefBase {
+
+	TOLUA_TEMPLATE_BIND(T, IObj);
+public:
+	~IRef();
+};
+
+$ifile "types/iapi/iapi_layer.h"
+$ifile "types/iapi/iapi_db.h"
+$ifile "types/iapi/iapi_persist.h"
+
+$ifile "lua/bindings/list.pkg", tmpl, IAPI::PropertyInfo, IAPI::MethodInfo, IAPI::MethodInfo::ParamInfo, int, Variant, IAPI_DB::ListingElement, String, IAPIRef
+
+class IAPI_Layer : public IAPI {
+
+	TOLUA_NO_CONSTRUCTOR;
+};
+
+$hfile "types/performance_metrics.h"
+
+$hfile "types/iapi/iapi_dummy.h"
+
+$hfile "types/image/image.h"
+
+$ifile "lua/bindings/table.pkg", tmpl, String Variant
+
+$ifile "types/global_vars.h"
+
+$ifile "types/script/script.h"
+
+$hfile "types/performance_metrics.h"
+

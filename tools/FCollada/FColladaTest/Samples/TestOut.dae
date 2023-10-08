@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <created>2007-12-17T17:02:46Z</created>
+    <modified>2007-12-17T17:02:46Z</modified>
+  </asset>
+  <library_animations>
+    <animation id="GrossAnimation1">
+      <animation id="Animation">
+        <extra>
+          <technique profile="FCOLLADA">
+            <user_properties>TestingSTNote</user_properties>
+          </technique>
+        </extra>
+      </animation>
+      <animation id="Animation1">
+        <source id="Animation1_Light1_color.R-input">
+          <float_array id="Animation1_Light1_color.R-input-array" count="0"/>
+          <technique_common>
+            <accessor source="#Animation1_Light1_color.R-input-array" count="0" stride="1">
+              <param name="TIME" type="float"/>
+            </accessor>
+          </technique_common>
+          <technique profile="MAYA">
+            <pre_infinity>CONSTANT</pre_infinity>
+            <post_infinity>CONSTANT</post_infinity>
+          </technique>
+        </source>
+        <source id="Animation1_Light1_color.R-output">
+          <float_array id="Animation1_Light1_color.R-output-array" count="0"/>
+          <technique_common>
+            <accessor source="#Animation1_Light1_color.R-output-array" count="0" stride="1">
+              <param name="R" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Animation1_Light1_color.R-interpolations">
+          <Name_array id="Animation1_Light1_color.R-interpolations-array" count="0"/>
+          <technique_common>
+            <accessor source="#Animation1_Light1_color.R-interpolations-array" count="0" stride="1">
+              <param name="INTERPOLATION" type="Name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <sampler id="Animation1_Light1_color.R-sampler">
+          <input semantic="INPUT" source="#Animation1_Light1_color.R-input"/>
+          <input semantic="OUTPUT" source="#Animation1_Light1_color.R-output"/>
+          <input semantic="INTERPOLATION" source="#Animation1_Light1_color.R-interpolations"/>
+        </sampler>
+        <channel source="#Animation1_Light1_color.R-sampler" target="Light1/color.R"/>
+        <extra>
+          <technique profile="FCOLLADA">
+            <user_properties>TestingSTNote</user_properties>
+          </technique>
+        </extra>
+      </animation>
+    </animation>
+    <animation id="GrossAnimation"/>
+  </library_animations>
+  <library_physics_materials>
+    <physics_material id="Pmat">
+      <technique_common>
+        <dynamic_friction>1.7</dynamic_friction>
+        <restitution>0.2</restitution>
+        <static_friction>1.6</static_friction>
+      </technique_common>
+    </physics_material>
+    <physics_material id="PMat">
+      <technique_common>
+        <dynamic_friction>7.6</dynamic_friction>
+        <restitution>-0.5</restitution>
+        <static_friction>0.6</static_friction>
+      </technique_common>
+    </physics_material>
+    <physics_material id="PMat1">
+      <technique_common>
+        <dynamic_friction>1992.5</dynamic_friction>
+        <restitution>33</restitution>
+        <static_friction>0.002</static_friction>
+      </technique_common>
+    </physics_material>
+  </library_physics_materials>
+  <library_force_fields>
+    <force_field id="ForceField" name="SomeField"/>
+  </library_force_fields>
+  <library_physics_models>
+    <physics_model id="PhysicsModel">
+      <rigid_body sid="GLAD">
+        <technique_common>
+          <dynamic>1</dynamic>
+          <mass>1</mass>
+          <mass_frame>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0 0</rotate>
+          </mass_frame>
+        </technique_common>
+      </rigid_body>
+      <rigid_body sid="DALG">
+        <technique_common>
+          <dynamic>1</dynamic>
+          <mass>0.5</mass>
+          <mass_frame>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0 0</rotate>
+          </mass_frame>
+        </technique_common>
+      </rigid_body>
+      <rigid_constraint sid="Pour">
+        <ref_attachment rigid_body=""/>
+        <attachment rigid_body=""/>
+        <technique_common>
+          <enabled>1</enabled>
+          <interpenetrate>0</interpenetrate>
+          <limits>
+            <swing_cone_and_twist>
+              <min>0 0 0</min>
+              <max>0 0 0</max>
+            </swing_cone_and_twist>
+            <linear>
+              <min>0 0 0</min>
+              <max>0 0 0</max>
+            </linear>
+          </limits>
+          <spring>
+            <angular>
+              <stiffness>1</stiffness>
+              <damping>0</damping>
+              <target_value>0</target_value>
+            </angular>
+            <linear>
+              <stiffness>1</stiffness>
+              <damping>0</damping>
+              <target_value>0</target_value>
+            </linear>
+          </spring>
+        </technique_common>
+      </rigid_constraint>
+      <rigid_constraint sid="Contre">
+        <ref_attachment rigid_body=""/>
+        <attachment rigid_body=""/>
+        <technique_common>
+          <enabled>0</enabled>
+          <interpenetrate>0</interpenetrate>
+          <limits>
+            <swing_cone_and_twist>
+              <min>0 0 0</min>
+              <max>0 0 0</max>
+            </swing_cone_and_twist>
+            <linear>
+              <min>0 0 0</min>
+              <max>0 0 0</max>
+            </linear>
+          </limits>
+          <spring>
+            <angular>
+              <stiffness>1</stiffness>
+              <damping>0</damping>
+              <target_value>0</target_value>
+            </angular>
+            <linear>
+              <stiffness>1</stiffness>
+              <damping>0</damping>
+              <target_value>0</target_value>
+            </linear>
+          </spring>
+        </technique_common>
+      </rigid_constraint>
+    </physics_model>
+    <physics_model id="PhysicsModel1">
+      <instance_physics_model url="#PhysicsModel"/>
+      <instance_physics_model url="#PhysicsModel"/>
+    </physics_model>
+    <physics_model id="PhysicsModel2"/>
+  </library_physics_models>
+  <library_cameras>
+    <camera id="Camera1">
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov>1.5</xfov>
+            <aspect_ratio>1.5</aspect_ratio>
+            <znear>0.5</znear>
+            <zfar>128</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>Testing Camera support.</user_properties>
+        </technique>
+      </extra>
+    </camera>
+    <camera id="Camera">
+      <optics>
+        <technique_common>
+          <orthographic>
+            <ymag>1.5</ymag>
+            <aspect_ratio>0.3</aspect_ratio>
+            <znear>0.01</znear>
+            <zfar>41.2</zfar>
+          </orthographic>
+        </technique_common>
+      </optics>
+    </camera>
+  </library_cameras>
+  <library_lights>
+    <light id="Light1">
+      <technique_common>
+        <point>
+          <color sid="color">0.5 0.2 0.7</color>
+          <constant_attenuation>1</constant_attenuation>
+          <linear_attenuation>0</linear_attenuation>
+          <quadratic_attenuation>0</quadratic_attenuation>
+        </point>
+      </technique_common>
+      <extra>
+        <technique profile="FCOLLADA">
+          <intensity>2.5</intensity>
+        </technique>
+      </extra>
+    </light>
+    <light id="Light2">
+      <technique_common>
+        <spot>
+          <color>0.25 0.25 0.75</color>
+          <constant_attenuation>1</constant_attenuation>
+          <linear_attenuation>0</linear_attenuation>
+          <quadratic_attenuation>0</quadratic_attenuation>
+          <falloff_angle>5</falloff_angle>
+          <falloff_exponent>1</falloff_exponent>
+        </spot>
+      </technique_common>
+      <extra>
+        <technique profile="FCOLLADA">
+          <intensity>1.5</intensity>
+          <outer_cone>5</outer_cone>
+          <dropoff>0</dropoff>
+        </technique>
+      </extra>
+    </light>
+    <light id="Light">
+      <technique_common>
+        <directional>
+          <color>0.1 0 -1</color>
+        </directional>
+      </technique_common>
+      <extra>
+        <technique profile="FCOLLADA">
+          <constant_attenuation>1</constant_attenuation>
+          <linear_attenuation>0</linear_attenuation>
+          <quadratic_attenuation>0</quadratic_attenuation>
+          <falloff_angle>5</falloff_angle>
+          <falloff_exponent>1</falloff_exponent>
+          <intensity>0.5</intensity>
+          <outer_cone>5</outer_cone>
+        </technique>
+      </extra>
+    </light>
+    <light id="Light3">
+      <technique_common>
+        <ambient>
+          <color>5 0 0.4</color>
+        </ambient>
+      </technique_common>
+      <extra>
+        <technique profile="FCTEI_TestProfile">
+          <MainParameterTree Vicious="Squirrel" Gross="1002">
+            <SomeParameter Guts="0">Test_SomeParameter</SomeParameter>
+            <SomeParameter Guts="3">Test_ThatParameter!</SomeParameter>
+          </MainParameterTree>
+        </technique>
+        <technique profile="FCOLLADA">
+          <intensity>-2.5</intensity>
+        </technique>
+      </extra>
+      <extra type="verificator"/>
+    </light>
+  </library_lights>
+  <library_images>
+    <image id="test_image">
+      <init_from>./Texture1.jpg</init_from>
+    </image>
+    <image id="test_image1" width="256" height="135">
+      <init_from>./Texture3D.jpg</init_from>
+    </image>
+    <image id="Image" width="33" depth="521"/>
+  </library_images>
+  <library_materials>
+    <material id="VisualMaterial">
+      <instance_effect url="#"/>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>EmptyMaterial244</user_properties>
+        </technique>
+      </extra>
+    </material>
+    <material id="VisualMaterial1">
+      <instance_effect url="#Effect"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect">
+      <profile_COMMON>
+        <newparam sid="test_image1-surface">
+          <surface type="2D">
+            <init_from>test_image1</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="test_image1-sampler">
+          <sampler2D>
+            <source>test_image1-surface</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+            <minfilter>NONE</minfilter>
+            <magfilter>NONE</magfilter>
+            <mipfilter>NONE</mipfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="test_image-surface">
+          <surface type="2D">
+            <init_from>test_image</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="test_image-sampler">
+          <sampler2D>
+            <source>test_image-surface</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+            <minfilter>NONE</minfilter>
+            <magfilter>NONE</magfilter>
+            <mipfilter>NONE</mipfilter>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color>1 0 -2 1</color>
+            </diffuse>
+            <specular>
+              <color>0 1 0.4 1</color>
+            </specular>
+            <shininess>
+              <float>40</float>
+            </shininess>
+            <transparent opaque="A_ONE">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+            <index_of_refraction>
+              <float>21</float>
+            </index_of_refraction>
+          </phong>
+          <extra>
+            <technique profile="FCOLLADA">
+              <bump>
+                <texture texture="test_image1-sampler" texcoord="">
+                  <extra>
+                    <technique profile="MAYA">
+                      <wrapU>2</wrapU>
+                    </technique>
+                  </extra>
+                </texture>
+                <texture texture="test_image-sampler" texcoord="">
+                  <extra>
+                    <technique profile="MAYA">
+                      <wrapV>-1.2</wrapV>
+                    </technique>
+                  </extra>
+                </texture>
+              </bump>
+              <filter_color>
+                <texture texture="" texcoord=""/>
+              </filter_color>
+            </technique>
+          </extra>
+        </technique>
+        <extra type="Curious">
+          <technique profile="Kiddy">
+            <Causes>trouble</Causes>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <profile_CG>
+        <code sid="TouchesAKey">Some CG code for you to parse!</code>
+        <include sid="PowerOfWill" url="./HowDoTheyDoIt.dd"/>
+        <newparam sid="">
+          <semantic>BOOL_P</semantic>
+          <bool>1</bool>
+        </newparam>
+        <newparam sid="TestSF">
+          <surface type="2D">
+            <init_from>test_image</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="Gotit">
+          <sampler2D>
+            <source>TestSF</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+            <minfilter>NONE</minfilter>
+            <magfilter>NONE</magfilter>
+            <mipfilter>NONE</mipfilter>
+          </sampler2D>
+        </newparam>
+        <technique sid="100 percent reason to remember the name.">
+          <newparam sid="">
+            <annotate name="UIMin">
+              <float>0.2</float>
+            </annotate>
+            <annotate name="UIMax">
+              <int>5</int>
+            </annotate>
+            <annotate name="UIWidget">
+              <string>RolloverSlider</string>
+            </annotate>
+            <annotate name="UIValid">
+              <bool>1</bool>
+            </annotate>
+            <semantic>FLOAT2_P</semantic>
+            <float2>1.5 5.2</float2>
+          </newparam>
+          <pass sid="First Pass"/>
+          <pass sid="Second Pass"/>
+        </technique>
+      </profile_CG>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>EmptyEffect.. for now!</user_properties>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="Geometry">
+      <mesh>
+        <source id="GeometrySource" name="TestPositionSource">
+          <float_array id="GeometrySource-array" count="12">0 0 3 5 0 -2 -3 4 -2 -3 -4 -2</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="GeometrySource1" name="TestColorSource">
+          <float_array id="GeometrySource1-array" count="12">1 0 0 1 0 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource1-array" count="3" stride="4">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+              <param name="A" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="GeometrySource2" name="TestDummySource">
+          <float_array id="GeometrySource2-array" count="10">0 1 2 3 4 5 6 7 8 9</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource2-array" count="3" stride="3">
+              <param type="float"/>
+              <param type="float"/>
+              <param type="float"/>
+            </accessor>
+          </technique_common>
+          <technique profile="FCTEI_TestProfile">
+            <MainParameterTree Vicious="Squirrel" Gross="1002">
+              <SomeParameter Guts="0">Test_SomeParameter</SomeParameter>
+              <SomeParameter Guts="3">Test_ThatParameter!</SomeParameter>
+            </MainParameterTree>
+          </technique>
+        </source>
+        <vertices id="Geometry-vertices">
+          <input semantic="POSITION" source="#GeometrySource"/>
+        </vertices>
+        <triangles material="VisualMaterial0" count="4">
+          <input semantic="VERTEX" source="#Geometry-vertices" offset="0"/>
+          <input semantic="COLOR" source="#GeometrySource1" offset="1"/>
+          <input semantic="EXTRA" source="#GeometrySource2" offset="2"/>
+          <p>0 0 3452816845 1 1 3452816845 2 2 3452816845 0 0 3452816845 2 1 3452816845 3 2 3452816845 0 0 3452816845 3 1 3452816845 1 2 3452816845 3 0 3452816845 2 1 3452816845 1 2 3452816845</p>
+          <extra>
+            <technique profile="FCTEI_TestProfile">
+              <MainParameterTree Vicious="Squirrel" Gross="1002">
+                <SomeParameter Guts="0">Test_SomeParameter</SomeParameter>
+                <SomeParameter Guts="3">Test_ThatParameter!</SomeParameter>
+              </MainParameterTree>
+            </technique>
+          </extra>
+          <extra type="verificator"/>
+        </triangles>
+        <polylist material="VisualMaterial4" count="0">
+          <input semantic="VERTEX" source="#Geometry-vertices" offset="0"/>
+          <input semantic="COLOR" source="#GeometrySource1" offset="1"/>
+          <vcount/>
+          <p/>
+          <extra>
+            <technique profile="FCTEI_TestProfile">
+              <MainParameterTree Vicious="Squirrel" Gross="1002">
+                <SomeParameter Guts="0">Test_SomeParameter</SomeParameter>
+                <SomeParameter Guts="3">Test_ThatParameter!</SomeParameter>
+              </MainParameterTree>
+            </technique>
+          </extra>
+          <extra type="verificator"/>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Geometry1">
+      <spline closed="0">
+        <source id="Geometry1-cvs-0">
+          <float_array id="Geometry1-cvs-0-array" count="0"/>
+          <technique_common>
+            <accessor source="#Geometry1-cvs-0-array" count="0" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <control_vertices>
+          <input semantic="POSITION" source="#Geometry1-cvs-0"/>
+        </control_vertices>
+        <extra>
+          <technique profile="FCOLLADA">
+            <type>BEZIER</type>
+          </technique>
+        </extra>
+      </spline>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Controller1">
+      <morph method="RELATIVE" source="#Geometry1">
+        <source id="Controller1-targets">
+          <IDREF_array id="Controller1-targets-array" count="2">Geometry1 Geometry1</IDREF_array>
+          <technique_common>
+            <accessor source="#Controller1-targets-array" count="2" stride="1">
+              <param name="MORPH_TARGET" type="IDREF"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Controller1-morph_weights">
+          <float_array id="Controller1-morph_weights-array" count="2">0.3 0.6</float_array>
+          <technique_common>
+            <accessor source="#Controller1-morph_weights-array" count="2" stride="1">
+              <param name="MORPH_WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <targets>
+          <input semantic="MORPH_TARGET" source="#Controller1-targets"/>
+          <input semantic="MORPH_WEIGHT" source="#Controller1-morph_weights"/>
+        </targets>
+      </morph>
+    </controller>
+    <controller id="Controller">
+      <skin source="#Geometry">
+        <bind_shape_matrix>0.3 0 -0.3 -21 0.96 0 2 2.5 0 -5 1 0 0 0 1 0</bind_shape_matrix>
+        <source id="Controller-joints">
+          <Name_array id="Controller-joints-array" count="2">joint1 joint2</Name_array>
+          <technique_common>
+            <accessor source="#Controller-joints-array" count="2" stride="1">
+              <param name="JOINT" type="Name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Controller-bind_poses">
+          <float_array id="Controller-bind_poses-array" count="32">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1 0 -0.4 0 0 0 1 -1 0 0 0 1 -3.108 0.4 1.2432 -0.12</float_array>
+          <technique_common>
+            <accessor source="#Controller-bind_poses-array" count="2" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Controller-weights">
+          <float_array id="Controller-weights-array" count="4">1 0.5 0.5 0.1</float_array>
+          <technique_common>
+            <accessor source="#Controller-weights-array" count="4" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Controller-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Controller-bind_poses"/>
+        </joints>
+        <vertex_weights count="4">
+          <input semantic="JOINT" source="#Controller-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Controller-weights" offset="1"/>
+          <vcount>2 0 1 1 </vcount>
+          <v>0 1 1 2 0 3 1 0</v>
+        </vertex_weights>
+      </skin>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>A nicey skinny controller. </user_properties>
+        </technique>
+      </extra>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="VisualSceneNode" name="Scene1">
+      <extra>
+        <technique profile="MAYA">
+          <layer name="TestL1"/>
+          <layer name="TestL2">Obj1 Obj2</layer>
+        </technique>
+      </extra>
+    </visual_scene>
+    <visual_scene id="VisualSceneNode1" name="Scene2">
+      <node id="TMChild" type="NODE">
+        <rotate>0 0 1 45</rotate>
+        <translate>0 4 6</translate>
+        <scale>3 0.5 2</scale>
+        <matrix>0 2 0.4 2 7 0.2 991 2.5 11 25 1.55 0.02 0.001 12 0.00102 0</matrix>
+        <lookat>1 2 3 5 6 9 12 0.3 0.4</lookat>
+        <skew>60 1 0 0 0 0 1</skew>
+      </node>
+      <node id="VisualSceneNode2" type="NODE">
+        <instance_geometry url="#Geometry">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="VisualMaterial0" target="#VisualMaterial"/>
+              <instance_material symbol="VisualMaterial4" target="#VisualMaterial"/>
+              <instance_material symbol="DUMMY" target="#">
+                <bind semantic="" target=""/>
+                <bind semantic="Toto" target="Targeted"/>
+                <bind semantic="Gallant" target="Pierto"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <instance_light url="#Light"/>
+        <instance_camera url="#Camera"/>
+      </node>
+      <node id="VisualSceneNode3" type="NODE">
+        <instance_controller url="#Controller">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="VisualMaterial0" target="#VisualMaterial"/>
+              <instance_material symbol="VisualMaterial4" target="#VisualMaterial"/>
+              <instance_material symbol="DUMMY" target="#">
+                <bind semantic="" target=""/>
+                <bind semantic="Toto" target="Targeted"/>
+                <bind semantic="Gallant" target="Pierto"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+        <extra type="instances">
+          <technique profile="FCOLLADA">
+            <instance_emitter url="#Emitter"/>
+            <instance_force_field url="#ForceField"/>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+    <visual_scene id="VisualSceneNode4" name="Scene3"/>
+    <visual_scene id="VisualSceneNode5">
+      <node id="VisualSceneNode6" sid="joint1" type="NODE">
+        <node id="VisualSceneNode7" sid="joint2" type="NODE"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#VisualSceneNode"/>
+  </scene>
+  <extra type="libraries">
+    <technique profile="FCOLLADA">
+      <library_emitters>
+        <emitter id="Emitter"/>
+        <emitter id="Emitter1"/>
+      </library_emitters>
+    </technique>
+  </extra>
+  <extra type="TOTO">
+    <technique profile="TOTO_TECHNIQUE">
+      <AParameter>AValue</AParameter>
+    </technique>
+  </extra>
+</COLLADA>

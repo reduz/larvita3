@@ -1,0 +1,23 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'ec_lib.c',
+	'ecp_smpl.c',
+	'ecp_mont.c',
+	'ecp_nist.c',
+	'ec_cvt.c',
+	'ec_mult.c',
+	'ec_err.c',
+	'ec_curve.c',
+	'ec_check.c',
+	'ec_print.c',
+	'ec_asn1.c',
+	'ec_key.c',
+	'ec2_smpl.c',
+	'ec2_mult.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

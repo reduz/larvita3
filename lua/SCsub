@@ -1,0 +1,19 @@
+Import('env')
+env_lua = env.Copy()
+env_lua.Append(CPPPATH=['#lua/include', '#lua/tolua++/include'])
+
+if env['lua_number_type'] == "float":
+	env_lua.Append(CPPFLAGS=['-DLUA_NUMBER_FLOAT'])
+	env_lua.Append(CPPFLAGS=['-DLUA_USE_FLOAT'])
+
+Import('env_native')
+env_native.Append(CPPPATH=['#lua/include', '#lua/tolua++/include'])
+
+Export('env_lua')
+
+env_lua.add_source_files("lua", "*.cpp", lib_env=env)
+
+SConscript('lua/SCsub');
+SConscript('toluaSCsub');
+
+SConscript('bindings/SCsub');

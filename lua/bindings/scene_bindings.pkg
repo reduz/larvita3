@@ -1,0 +1,24 @@
+// nodes
+
+$ifile "scene/nodes/node.h"
+$ifile "scene/nodes/visual_node.h"
+$ifile "scene/nodes/dummy_node.h"
+$ifile "scene/nodes/camera_node.h"
+$ifile "scene/nodes/camera_follow_node.h"
+$ifile "scene/nodes/camera_fps_node.h"
+$ifile "scene/nodes/mesh_node.h"
+$ifile "scene/nodes/light_node.h"
+$ifile "scene/nodes/scene_node.h"
+$ifile "scene/nodes/collision_node.h"
+$ifile "scene/nodes/skeleton_node.h"
+$ifile "scene/nodes/primitive_list_node.h"
+$ifile "scene/nodes/rigid_body_node.h"
+$ifile "scene/nodes/room_node.h"
+$ifile "scene/nodes/particle_system_node.h"
+$ifile "scene/nodes/animation_node.h"
+$ifile "scene/nodes/spline_node.h"
+
+// main
+
+$ifile "scene/main/scene_main_loop.h"
+

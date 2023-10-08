@@ -1,0 +1,803 @@
+
+//
+// C++ Interface: signals
+//
+// Description: 
+//
+//
+// Author: Juan Linietsky <reduzio@gmail.com>, (C) 2006
+//
+// Copyright: See COPYING file that comes with this distribution
+//
+//
+#ifndef PIGUISIGNALS_H
+#define PIGUISIGNALS_H
+
+#include "base/defs.h"
+
+namespace GUI {
+
+typedef void (*_EmptyFunc)();
+
+template<class T>
+struct _UnionMethod {
+
+	union Same {
+		
+		_EmptyFunc ef;
+		T t;
+	} same;
+};
+		
+template<class T>
+_EmptyFunc get_method_ptr(T p_method) {
+	
+	_UnionMethod<T> u;
+	u.same.t=p_method;
+	return u.same.ef;
+}
+
+/**
+	@author Juan Linietsky <reduzio@gmail.com>
+*/
+
+
+
+class SignalBase;
+
+
+class SignalTarget {
+
+	struct Connection {
+
+		int refcount; //amount of times this signal is connected to methods of this class!
+		
+		
+		SignalBase * signal;
+
+		Connection *next;
+
+		Connection() { next=0; signal=0; refcount=0; }
+	};
+
+	// using underscore because some older compilers will complain
+	
+	Connection *_conn_list; //signals connected are referenced here, so as you see, it's very lightweight
+	
+	friend class SignalBase;
+	bool _register_signal( SignalBase *p_signal ); ///< return true if signal already exists, to warn and avoid connecting twice.
+	void _clear_signal( SignalBase *p_signal );
+public:
+	
+		
+	SignalTarget();
+	~SignalTarget();
+};
+
+
+
+/* 
+	NtoN: 0to1
+	N: 1
+*/
+
+""" bind_base n N
+
+template<$repeat 1-n sep , (class P%i%)$>
+struct Bind$n$to$N$_Base {
+	
+	virtual SignalTarget *get_instance() const=0;
+	virtual _EmptyFunc get_method()const =0;
+	virtual void call($repeat 1-n sep , (P%i%)$)=0;
+	virtual Bind$n$to$N$_Base * copy() const=0;
+	virtual ~Bind$n$to$N$_Base() {}
+};
+"""
+
+/*
+	examples
+	n: 0
+	N: 1
+*/
+	
+
+""" bind n N
+
+template<$repeat 1-N sep , (class P%i%)$>
+struct Bind$n$to$N$ : public Bind$n$to$N$_Base<$repeat 1-n sep , (P%i%)$> {
+
+	P$N$ data;
+	Method$N$<$repeat 1-N sep , (P%i%)$> method;
+
+	_EmptyFunc get_method() const { return method.get_method(); }
+	SignalTarget *get_instance() const { return method.get_instance(); }
+	
+	void call($repeat 1-n sep , (P%i% p_data%i%)$) { method.call($repeat 1-n sep , (p_data%i%)$, data); }
+	Bind$n$to$N$_Base<$repeat 1-n sep , (P%i%)$> * copy() const { 
+		Bind$n$to$N$<$repeat 1-N sep , (P%i%)$> *_copy = new Bind$n$to$N$<$repeat 1-N sep , (P%i%)$>(method, data);
+		*_copy=*this;
+		return _copy; 
+	}
+	
+	Bind$n$to$N$(const Method$N$<$repeat 1-N sep , (P%i%)$>& p_method, P$N$ p_data) {
+
+		data = p_data;
+		method=p_method;
+	}
+};
+"""
+
+
+template< class P1, class P2, class P3,class P4, class P5, class P6 > 
+class Method6 {
+public:
+
+	typedef void (Method6::*LocalMethod)(P1,P2,P3,P4,P5,P6);
+	typedef void (*CallFuncPtr)(void *,LocalMethod,P1,P2,P3,P4,P5,P6);
+
+private:
+
+
+	/* the clever hack that does the magic */
+	template<class T>
+	static void call_func_template(void *p_object_ptr,LocalMethod p_m,P1 p1,P2 p2,P3 p3,P4 p4,P5 p5, P6 p6) {
+		
+		T *t = static_cast<T*>(p_object_ptr);
+		void (T::*obj_method)(P1,P2,P3,P4,P5,P6)=reinterpret_cast<void (T::*)(P1,P2,P3,P4,P5,P6)>(p_m);
+		return (t->*obj_method)(p1,p2,p3,p4,p5,p6);
+	}
+
+	SignalTarget *instance; 
+	CallFuncPtr call_func;
+	LocalMethod method;
+	void *object;
+public:
+
+	SignalTarget *get_instance() const { return instance; }
+	_EmptyFunc get_method() const { return get_method_ptr(method); }
+	bool is_empty() { return object==0; }
+	
+	bool operator==(const Method6& p_method) const { return ( method==p_method.method && object==object ); }
+	bool operator!=(const Method6& p_method) const { return !( *this==p_method ); }
+	
+	void call(P1 p1,P2 p2,P3 p3,P4 p4,P5 p5,P6 p6) {
+
+		if (!object)
+			return;
+		call_func(object,method,p1,p2,p3,p4,p5,p6);
+
+	};
+
+	bool is_empty() const  { return (object==0); }
+	void clear() { object=0; }
+
+	template<class T>
+	void set( T* p_instance,void (T::*p_method)(P1,P2,P3,P4,P5,P6) ) {
+
+		// real stuff used to call
+		
+		instance=p_instance;
+		object=p_instance;
+		method=reinterpret_cast<LocalMethod>(p_method);
+		call_func=&call_func_template<T>;
+	}
+
+	template<class T>
+	Method6( T* p_instance,void (T::*p_method)(P1,P2,P3,P4,P5,P6)) {
+		set( p_instance,p_method );
+	}
+
+	Method6() { object=0; call_func=0; instance=0; }
+};
+
+
+/*
+	examples
+	N: 2
+	BindN: 3
+	NtoN: 2to3
+*/
+	
+""" method N BindN NtoN
+template< $repeat 1-N sep , (class P%i%)$ >
+class Method$N$ {
+public:
+
+	typedef void (Method$N$::*LocalMethod)($repeat 1-N sep , (P%i%)$);
+	typedef void (*CallFuncPtr)(void *,LocalMethod,$repeat 1-N sep , (P%i%)$);
+
+private:
+
+
+	/* the clever hack that does the magic */
+	template<class T>
+	static void call_func_template(void *p_object_ptr,LocalMethod p_m,$repeat 1-N sep , (P%i% p%i%)$) {
+		
+		T *t = static_cast<T*>(p_object_ptr);
+		void (T::*obj_method)($repeat 1-N sep , (P%i%)$)=reinterpret_cast<void (T::*)($repeat 1-N sep , (P%i%)$)>(p_m);
+		return (t->*obj_method)($repeat 1-N sep , (p%i%)$);
+	}
+
+	SignalTarget *instance; 
+	CallFuncPtr call_func;
+	LocalMethod method;
+	void *object;
+	Bind$NtoN$_Base<$repeat 1-N sep , (P%i%)$> *bindobj;
+public:
+
+	SignalTarget *get_instance() const { return bindobj?bindobj->get_instance():instance; }
+	_EmptyFunc get_method() const { return bindobj?bindobj->get_method():get_method_ptr(method); }
+	bool is_empty() { return object==0 && bindobj==0; }
+
+	bool operator==(const Method$N$& p_method) const { return ( method==p_method.method && object==object ); }
+	bool operator!=(const Method$N$& p_method) const { return !( *this==p_method ); }
+	
+	void call($repeat 1-N sep , (P%i% p%i%)$) {
+
+		if (bindobj)
+			bindobj->call($repeat 1-N sep , (p%i%)$);
+		else if (object) {
+			call_func(object,method,$repeat 1-N sep , (p%i%)$);
+		}
+
+	};
+
+	bool is_empty() const  { return (object==0 && bindobj==0); }
+	void clear() { object=0; if (bindobj) delete bindobj; bindobj=0; }
+
+	template<class T>
+	void set( T* p_instance,void (T::*p_method)($repeat 1-N sep , (P%i%)$) ) {
+
+		// real stuff used to call
+		if (bindobj)
+			delete bindobj;
+		bindobj=0;
+		instance=p_instance;
+		object=p_instance;
+		method=reinterpret_cast<LocalMethod>(p_method);
+		call_func=&call_func_template<T>;
+	}
+
+	template<class TBind>
+	void bind(const Method$BindN$<$repeat 1-N sep , (P%i%)$, TBind>& p_method, TBind p_data) {
+		
+		if (bindobj)
+			delete bindobj;
+		bindobj=0;
+		instance=0;
+		object=0;
+		method=0;
+		bindobj = new Bind$NtoN$<$repeat 1-N sep , (P%i%)$, TBind>(p_method, p_data);
+	}
+
+	template<class T>
+	Method$N$( T* p_instance,void (T::*p_method)($repeat 1-N sep , (P%i%)$)) {
+		bindobj = 0;
+		set( p_instance,p_method );
+	}
+
+	template<class TBind>
+	Method$N$(const Method$BindN$<$repeat 1-N sep , (P%i%)$,TBind>& p_method, TBind p_data) {
+		bindobj=0; object=0; call_func=0; instance=0;
+		bind( p_method, p_data );
+		
+	}
+
+	void operator=(const Method$N$<$repeat 1-N sep , (P%i%)$>& p_method) {
+		
+		if (bindobj)
+			delete bindobj;
+		bindobj=0;
+		
+		if (p_method.bindobj) {
+			
+			bindobj=p_method.bindobj->copy();
+			object=0; call_func=0; instance=0;
+			
+		} else {
+			
+			object=p_method.object;
+			call_func=p_method.call_func;
+			instance=p_method.instance;
+			method = p_method.method;
+			bindobj=0;
+		}
+		
+	}
+
+	Method$N$(const Method$N$<$repeat 1-N sep , (P%i%)$>& p_method) {
+		if (p_method.bindobj) {
+			
+			bindobj=p_method.bindobj->copy();
+			object=0; call_func=0; instance=0;
+			
+		} else {
+			
+			object=p_method.object;
+			call_func=p_method.call_func;
+			instance=p_method.instance;
+			method = p_method.method;
+			bindobj=0;
+		}
+	}	
+
+	Method$N$() { bindobj=0; object=0; call_func=0; instance=0; }
+
+	~Method$N$() { if (bindobj) delete bindobj; }
+};
+"""
+$bind_base 5 6$
+$bind 5 6$
+$method 5 6 5to6$
+
+$bind_base 4 5$
+$bind 4 5$
+$method 4 5 4to5$
+
+$bind_base 3 4$
+$bind 3 4$
+$method 3 4 3to4$
+
+$bind_base 2 3$
+$bind 2 3$
+$method 2 3 2to3$
+
+$bind_base 1 2$
+$bind 1 2$
+$method 1 2 1to2$
+
+
+/**
+ * -Simple Method Pointer (no parameters)
+ * usage:
+ *
+ * Method my_method_ptr;
+ *
+ * -Connect to a method "desired_method", where instance inherits from SignalTarget
+ *
+ * my_method_ptr.set( instance , &Class::desired_method );
+ *
+ * or alternatively:
+ *
+ * my_method_ptr = MethodPtr<ClassName>( instance , &ClassName::desired_method );
+ * 
+ * -Call the method
+ *
+ * my_method_ptr.call();
+ *
+ * NOTE: Return type must be always void
+ */
+
+/** Bind Method1 to Method0 **/
+
+struct Bind0to1_Base {
+	
+	virtual SignalTarget *get_instance() const=0;
+	virtual _EmptyFunc get_method()const =0;
+	virtual void call()=0;
+	virtual Bind0to1_Base * copy() const=0;
+	virtual ~Bind0to1_Base() {}
+};
+
+template<class P1>
+struct Bind0to1 : public Bind0to1_Base {
+	
+	P1 data1;
+	Method1<P1> method;
+
+	_EmptyFunc get_method() const { return method.get_method(); }
+	SignalTarget *get_instance() const { return method.get_instance(); }
+	
+	void call() { method.call(data1); }
+	Bind0to1_Base * copy() const { 
+		Bind0to1<P1> *_copy = new Bind0to1<P1>(method,data1);
+		*_copy=*this;
+		return _copy; 
+	}
+	
+	Bind0to1(const Method1<P1>& p_method1, P1 p_data1) {data1=p_data1; method=p_method1; }
+};
+
+class Method {
+public:
+
+	typedef void (Method::*LocalMethod)();
+	typedef void (*CallFuncPtr)(void *,LocalMethod);
+
+private:
+
+
+	/* the clever hack that does the magic */
+	template<class T>
+	static void call_func_template(void *p_object_ptr,LocalMethod p_m) {
+		
+		T *t = static_cast<T*>(p_object_ptr);
+		void (T::*obj_method)()=reinterpret_cast<void (T::*)()>(p_m);
+		return (t->*obj_method)();
+	}
+
+	SignalTarget *instance; 
+	CallFuncPtr call_func;
+	LocalMethod method;
+	void *object;
+	Bind0to1_Base *bindobj;
+public:
+
+	SignalTarget *get_instance() const { return bindobj?bindobj->get_instance():instance; }
+	_EmptyFunc get_method() const { return bindobj?bindobj->get_method():get_method_ptr(method); }
+	bool is_empty() { return object==0 && bindobj==0; }
+	
+	bool operator==(const Method& p_method) const { return get_method()==p_method.get_method() && get_instance()==p_method.get_instance();}
+	bool operator!=(const Method& p_method) const { return !( *this==p_method ); }
+	
+	void call() {
+		if (bindobj)
+			bindobj->call();
+		else if (object) {
+			
+			call_func(object,method);
+		}
+
+	};
+
+	bool is_empty() const  { return (object==0 && bindobj==0); }
+	void clear() { object=0; if (bindobj) delete bindobj; bindobj=0; }
+
+	template<class T>
+	void set( T* p_instance,void (T::*p_method)() ) {
+
+		// real stuff used to call
+		if (bindobj)
+			delete bindobj;
+		bindobj=0;
+		instance=p_instance;
+		object=p_instance;
+		method=reinterpret_cast<LocalMethod>(p_method);
+		call_func=&call_func_template<T>;
+	}
+
+	template<class P1>
+	void bind(const Method1<P1>& p_method1, P1 p_data1) {
+		
+		if (bindobj)
+			delete bindobj;
+		bindobj=0;
+		instance=0;
+		object=0;
+		method=0;
+		bindobj = new Bind0to1<P1>(p_method1,p_data1);		
+	}
+	
+	template<class T>
+	Method( T* p_instance,void (T::*p_method)()) {
+		bindobj=0;
+		set( p_instance,p_method );
+		
+	}
+
+	template<class P1>
+	Method(const Method1<P1>& p_method1, P1 p_data1) {
+		bindobj=0; object=0; call_func=0; instance=0;
+		bind( p_method1,p_data1 );
+		
+	}
+	
+	void operator=(const Method& p_method) {
+		
+		if (bindobj)
+			delete bindobj;
+		bindobj=0;
+		
+		if (p_method.bindobj) {
+			
+			bindobj=p_method.bindobj->copy();
+			object=0; call_func=0; instance=0;
+			
+		} else {
+			
+			object=p_method.object;
+			call_func=p_method.call_func;
+			instance=p_method.instance;
+			method = p_method.method;
+			bindobj=0;
+		}
+		
+	}
+	Method() { bindobj=0; object=0; call_func=0; instance=0; }
+	Method(const Method& p_method) {
+		if (p_method.bindobj) {
+			
+			bindobj=p_method.bindobj->copy();
+			object=0; call_func=0; instance=0;
+			
+		} else {
+			
+			object=p_method.object;
+			call_func=p_method.call_func;
+			instance=p_method.instance;
+			method = p_method.method;
+			bindobj=0;
+		}
+	}	
+	
+	~Method() { if (bindobj) delete bindobj; }
+};
+
+
+/**
+ * SignalTarget:
+ *
+ * Signals can only be connected to objects inheriting from this class.
+ * (normal or multiple inheritance is fine)
+ * This is so, when the object dies, signals pointing to it are cleaned up,
+ * so it becomes impossible (or at least very hard) to call a no longer existing instance.
+ */
+
+
+class SignalBase {
+protected:
+friend class SignalTarget;
+
+	virtual void remove_target( SignalTarget *p_target )=0;
+
+	bool register_at_target( SignalTarget *p_target ); //return true if failed! (signal already connected to
+	void remove_from_target( SignalTarget *p_target );
+	
+	virtual ~SignalBase() {};
+
+};
+
+
+/*
+	signal_call
+	N: 5
+*/
+
+""" signal_call N
+	template<$repeat 1-N sep , (class P%i%)$>
+	void call($repeat 1-N sep , (P%i% p%i%)$) {
+
+		call_ref++;
+
+		Connection *c = conn_list;
+
+		while (c) {
+
+			if (!c->removed) //removed in a previous call
+				c->method.call($repeat 1-N sep , (p%i%)$);
+			c=c->next;
+		}		
+
+		call_ref--;
+
+		if (call_ref==0 && remotion_on_call)
+			remove_pending();
+
+	}
+"""
+
+
+
+template<class M=Method>
+class Signal : public SignalBase {
+
+	struct Connection {
+
+		SignalTarget *instance;
+		Connection *next;
+		M method;
+		
+		bool removed; //workaround to avoid a complex situation (target is deleted while in call)
+
+		Connection() { next=0; removed=false; instance=0; }
+	};
+
+
+	Connection *conn_list;
+	
+	int call_ref; // each time we call, increments by one, then decrements by one
+	bool remotion_on_call; //workaround to avoid a complex situation (target is deleted while in call)
+
+	virtual void remove_target( SignalTarget *p_target ) {
+
+		Connection *c = conn_list;
+				
+		while (c) {
+
+			
+			if (c->instance==p_target) {
+				
+				c->removed=true;
+			}
+			
+			c=c->next;
+			
+		}
+		
+		//make sure we are not inside a call. if we are, the call will erase this later
+		if (call_ref==0) 
+			remove_pending();
+		else
+			remotion_on_call=true;
+		
+	}
+	
+	void remove_pending() {
+
+		Connection *c = conn_list;
+		Connection **cp = &conn_list;
+				
+		while (c) {
+
+			
+			if (c->removed) {
+
+				Connection *aux=c;
+				*cp=c->next;
+				c=c->next;
+
+				remove_from_target( aux->instance );
+				delete aux; //good bye connection
+
+				continue;
+				
+			}
+
+			cp=&c->next;
+			c=c->next;
+			
+		}
+		
+		remotion_on_call=false;
+	}
+	
+	/// for now, you can't really copy a signal to another 
+	Signal(const Signal& p_cc);
+	void operator=(const Signal& p_cc);
+public:
+	
+	
+	template<class T, class U>
+	void connect( T* p_instance, U p_method ) {
+		
+		connect( M(p_instance,p_method) );
+	}
+	
+	void connect( const M& p_method ) {
+	
+		M m=p_method;
+		
+		if (call_ref>0) //cant connect while call-ref-ing
+			return;
+		
+		Connection *c = conn_list;
+		Connection *last=0;
+
+		/* Must check beforehand if we have this method */
+		
+		while (c) {
+			
+			if (c->method==m)
+				return; // already connected there! dont do it again
+
+			if (!c->next)
+				last=c;
+			c=c->next;
+		}
+
+		register_at_target( m.get_instance() );
+			//instance already has us? do we have that method?
+
+
+		c = new Connection;
+		c->method=m;
+		c->instance=m.get_instance();
+		if (conn_list && last) {
+			
+			last->next=c;
+		} else {
+			c->next=conn_list;
+			conn_list=c;
+		}
+
+	}
+
+	
+	template<class T,class U>
+	void disconnect(T p_instance, U p_method_ptr ) {
+
+		disconnect( M( p_instance, p_method_ptr ) );
+	}
+	
+	void disconnect( const M& p_method ) {
+
+		Connection *c=conn_list;
+				
+		while (c) {
+
+			
+			if (c->method==p_method) {
+
+				
+				c->removed=true;
+				break;
+			}
+			
+			c=c->next;
+		}
+						
+		// unless inside a call, cleanup! otherwise autocleanup will happen later
+		
+		if (call_ref==0) 
+			remove_pending();
+		else
+			remotion_on_call=true;
+		
+	}
+	
+	/* You can only call the right method! using the wrong one will cause a compiler error! */
+	
+	void call() {
+		
+		call_ref++;
+		
+		Connection *c = conn_list;
+				
+		while (c) {
+			
+			if (!c->removed) //removed in a previous call
+				c->method.call();
+			c=c->next;
+		}			
+		call_ref--;
+		
+		if (call_ref==0 && remotion_on_call)
+			remove_pending();
+			
+	}
+
+	$signal_call 1$
+	$signal_call 2$
+	$signal_call 3$
+	$signal_call 4$
+	$signal_call 5$
+	$signal_call 6$
+	
+	Signal() {
+
+		conn_list=0;
+		call_ref=0; 
+		remotion_on_call=false;		
+	}
+	
+	
+	~Signal() {
+		
+		if (call_ref>0) {
+			
+			PRINT_ERROR(" DO NOT DELETE A SIGNAL IN THE MIDDLE OF A CALL() ");
+			
+		}
+			
+		Connection *c = conn_list;
+				
+		while (c) {
+			
+			c->removed=true;
+			c=c->next;
+		}
+		
+		remove_pending();
+		
+	};
+
+};
+
+
+
+}
+		
+#endif
+
+
+

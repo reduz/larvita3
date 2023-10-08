@@ -1,0 +1,9 @@
+Import('env')
+
+SConscript("shaders/SCsub")
+
+env.add_source_files("drivers","*.cpp")
+env.add_source_files("drivers","*.c")
+
+Export('env')
+

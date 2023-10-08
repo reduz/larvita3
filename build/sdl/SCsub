@@ -1,0 +1,25 @@
+
+
+#print lib_list
+Import("env");
+
+if env['enable_collada']==1:
+	env['LIBS'] = env['LIBS'] + ['fcollada']
+	env.Append(LIBPATH=['#bin'])
+
+sdl_setup_lib = env.Library('sdl_setup','setup_sdl.cpp');
+env.Prepend(LIBS=[sdl_setup_lib]);
+env.Append(LIBPATH=['#build/sdl'])
+
+import sys
+if (sys.platform == 'darwin'):
+	osxlib = env.Library("osxmain",["sdl_main_osx.m"])
+	env.Append(LIBS=[osxlib])
+
+env.Program('#bin/tests_sdl', ['tests_sdl.cpp']);
+env.Program('#bin/editor_sdl', ['editor_sdl.cpp']);
+
+if env['optimize']:
+	env.Program('#bin/script_exec_opt', ['script_exec.cpp'], CPPPATH=env['CPPPATH']+['#lua/include'])
+else:
+	env.Program('#bin/script_exec', ['script_exec.cpp'], CPPPATH=env['CPPPATH']+['#lua/include'])

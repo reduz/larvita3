@@ -1,0 +1,17 @@
+Import('env')
+
+libs = []
+
+for x in env.lib_link_order:
+
+	target = env.Library(x,env.lib_objects[x])
+	
+	libs.append(target)
+	if (x=="engine"): #must add after engine
+		libs.append(env.gui_lib)
+	print("adding"+str(target))
+	#env.lib_list+=target
+
+env.Prepend(LIBS=libs)
+
+Export('env')

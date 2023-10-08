@@ -1,0 +1,77 @@
+// os
+
+$ifile "os/time.h"
+$ifile "os/dir_access.h"
+$ifile "os/file_access.h"
+$ifile "os/http_client.h"
+$ifile "os/input_event.h"
+$ifile "os/keyboard.h"
+$ifile "os/memory.h"
+$ifile "os/memory_pool_static.h"
+$ifile "os/memory_pool_dynamic.h"
+$ifile "os/mutex.h"
+$ifile "os/semaphore.h"
+$ifile "os/tcp_client.h"
+$ifile "os/thread.h"
+$ifile "os/shell.h"
+
+$ifile "os/network.h"
+$ifile "os/resolver.h"
+
+$ifile "os/http_client.h"
+
+class HTTPClient {
+
+public:
+
+	lua_Object read(int p_size);
+};
+
+${
+
+#define TOLUA_DISABLE_tolua_larvita_HTTPClient_read00
+
+static int tolua_larvita_HTTPClient_read00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"HTTPClient",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  HTTPClient* self = (HTTPClient*)  tolua_tousertype(tolua_S,1,0);
+  int p_len = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'read'",NULL);
+#endif
+  {
+  
+   char buf[256];
+   if (p_len > 256) p_len = 256;
+  
+   int ret = self->get_data((Uint8*)buf, p_len);
+
+   if (ret == -1) lua_pushnil(tolua_S);
+   else lua_pushlstring(tolua_S,buf,ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'read'.",&tolua_err);
+ return 0;
+#endif
+}
+
+$}
+
+// main
+
+$ifile "main/main.h"
+$ifile "main/main_loop.h"
+

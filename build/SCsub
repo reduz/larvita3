@@ -1,0 +1,25 @@
+import sys
+
+import os
+dir = os.listdir(Dir('.').abspath)
+
+Import('env_native')
+
+for platform in dir:
+
+	if platform[0] == '.':
+		continue
+
+	if os.path.isdir(platform):
+	
+		env = env_native.Clone()
+		sys.path.append("./"+platform)
+		import detect
+		
+		detect.configure(env)
+		if detect.can_build():
+			env.platform = platform
+			env_native.platforms[platform] = env
+
+		sys.path.remove("./"+platform)
+		sys.modules.pop('detect')

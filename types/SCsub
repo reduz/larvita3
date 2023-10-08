@@ -1,0 +1,14 @@
+Import('env')
+
+env.add_source_files("core","*.cpp")
+
+Export('env')
+
+SConscript('string/SCsub');
+SConscript('script/SCsub');
+SConscript('math/SCsub');
+SConscript('signals/SCsub');
+SConscript('iapi/SCsub');
+SConscript('image/SCsub');
+
+

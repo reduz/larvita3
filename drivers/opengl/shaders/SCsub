@@ -1,0 +1,10 @@
+Import('env')
+
+env.GLSL('pre_light.glsl');
+env.GLSL('light.glsl');
+env.GLSL('material.glsl');
+env.GLSL('post_process.glsl');
+env.GLSL('blur_copy.glsl');
+env.GLSL('blur.glsl');
+env.GLSL('glow.glsl');
+

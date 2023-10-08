@@ -1,0 +1,319 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'bntest.c',
+	'ectest.c',
+	'ecdsatest.c',
+	'ecdhtest.c',
+	'ideatest.c',
+	'md2test.c',
+	'md4test.c',
+	'md5test.c',
+	'hmactest.c',
+	'rc2test.c',
+	'rc4test.c',
+	'rc5test.c',
+	'destest.c',
+	'shatest.c',
+	'sha1test.c',
+	'sha256t.c',
+	'sha512t.c',
+	'mdc2test.c',
+	'rmdtest.c',
+	'randtest.c',
+	'dhtest.c',
+	'enginetest.c',
+	'bftest.c',
+	'casttest.c',
+	'ssltest.c',
+	'exptest.c',
+	'dsatest.c',
+	'rsa_test.c',
+	'evp_test.c',
+	'igetest.c',
+	'dummytest.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

@@ -1,0 +1,7 @@
+$ifile "collision/volume.h"
+$ifile "collision/sphere_volume.h"
+$ifile "collision/pill_volume.h"
+$ifile "collision/ellipsoid_volume.h"
+$ifile "collision/convex_polygon_volume.h"
+$ifile "collision/plane_volume.h"
+$ifile "collision/triangle_mesh_volume.h"

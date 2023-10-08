@@ -1,0 +1,4 @@
+
+##if COLLADA_ENABLED then
+$ifile "tools/FCollada/collada.h"
+##end

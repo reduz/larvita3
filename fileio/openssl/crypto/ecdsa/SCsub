@@ -1,0 +1,15 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'ecs_lib.c',
+	'ecs_asn1.c',
+	'ecs_ossl.c',
+	'ecs_sign.c',
+	'ecs_vrf.c',
+	'ecs_err.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

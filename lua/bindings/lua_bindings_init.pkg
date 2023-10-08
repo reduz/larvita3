@@ -1,0 +1,86 @@
+// signal handlers
+$<
+LuaSignalHandler__larvita::set_as_default();
+$>
+
+${
+static int variant_tostring(lua_State* L) {
+
+	tolua_Error tolua_err;
+	if (lua_isnil(L, 1) || lua_istable(L, 1) || !tolua_isVariant(L,1,0,&tolua_err) || lua_isnumber(L, 1)) {
+		lua_getglobal(L, "old_tostring");
+		lua_pushvalue(L, 1);
+		lua_call(L, 1, 1);
+		return 1;
+	};
+	
+	const Variant p_var = tolua_toVariant(L, 1, 0);
+	lua_pushstring(L, p_var.get_string().utf8().get_data());
+	
+	return 1;
+};
+$}
+
+$<
+	tolua_function(tolua_S,"variant_tostring",variant_tostring);
+$>
+
+$<
+lua_register(tolua_S, "global_disconnect_signal", global_disconnect_signal);
+$>
+
+
+// init stuff
+$lfile "lua/class.lua"
+$lfile "lua/globals.lua"
+
+$<
+lua_getglobal(tolua_S, "add_connect");
+if (lua_isnil(tolua_S, -1)) {
+	printf("add_connect not found\n");
+	lua_pop(tolua_S, 1);
+} else {
+	lua_pushvalue(tolua_S, LUA_REGISTRYINDEX);
+	lua_call(tolua_S, 1, 0);
+};
+
+	/* creating tolua_irefbox */
+	lua_pushstring(tolua_S, "tolua_irefbox");
+	lua_newtable(tolua_S);
+	lua_newtable(tolua_S); lua_pushliteral(tolua_S, "__mode"); lua_pushliteral(tolua_S, "k"); lua_rawset(tolua_S, -3);
+	lua_setmetatable(tolua_S, -2);
+	lua_settable(tolua_S, LUA_REGISTRYINDEX);
+
+
+
+$>
+
+${
+lua_Object get_registry(lua_State* L) {
+
+	lua_pushvalue(L, LUA_REGISTRYINDEX);
+	return lua_gettop(L);
+};
+$}
+lua_Object get_registry(lua_State* L);
+
+${
+
+static int global_disconnect_signal(lua_State* L) {
+
+	SignalBase* s = (SignalBase*)tolua_tousertype(L, 1, 0);
+	int count = (int)tolua_tonumber(L, 2, -1);
+	
+	if (!s || count < 0) {
+		lua_pushstring(L, "Invalid parameters to SignalBase::disconnect");
+		lua_error(L);
+	} else {
+		s->disconnect(count);
+	};
+	return 0;
+};
+
+$}
+
+
+

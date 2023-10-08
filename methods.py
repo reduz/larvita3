@@ -1,0 +1,405 @@
+import os
+
+def add_source_files(self, library, filetype, lib_env = None, shared = False):
+	import glob;
+	import string;
+	sources = []
+	#if not lib_objects:
+	if not lib_env:
+		lib_env = self
+	if type(filetype) == type(""):
+
+		dir = self.Dir('.').abspath
+		sources = glob.glob(dir + "/"+filetype);
+	else:
+		for f in filetype:
+			sources.append(self.File(f))
+			
+	lib_list = library
+	if type(lib_list) == type(""):
+		
+		if (not lib_env.lib_objects.has_key(library)):
+			lib_env.lib_objects[library]=[]
+			lib_env.lib_link_order=[library]+lib_env.lib_link_order
+		lib_list = lib_env.lib_objects[library]
+
+	for f in sources:
+
+		if shared:
+			lib_list.append(self.SharedObject(f))
+		else:
+			lib_list.append(self.Object(f))
+
+import re
+pkg_re = re.compile('^[\t\w]*\$[cplih]file\s*\"([^\"]+)\"', re.M)
+
+def pkg_scan_func(node, env, path):
+	import os
+	if str(node)[-4:] != ".pkg":
+		return []
+	dep_list = pkg_re.findall(node.get_contents())
+	i=0
+	def repl(s):
+		if env.has_key(s.group(1)):
+			return env[s.group(1)]
+		else:
+			return ""
+	ret_list = []
+	while i<len(dep_list):
+		dep_list[i] = re.sub("\$\(([^\)]*)\)", repl, dep_list[i])
+		if dep_list[i] != "":
+			if dep_list[i][:1] != '/':
+				dep_list[i] = '#/'+dep_list[i]
+			ret_list.append(dep_list[i])
+		i = i+1
+	
+	return ret_list
+
+def make_tolua_code(self, target, source, pkgname, list = None, custom_script = None, export_header = True, use_bootstrap = False):
+
+	dir = self.Dir('.').path
+
+	ptarget = dir + '/' + target
+	psource = dir + '/' + source
+	header = target[:-4] + '.h'
+	pheader = dir + '/' + header
+
+	custom = ""
+	if custom_script:
+		custom = " -L "+custom_script
+
+	if 'msvc' in self['TOOLS']:
+		sep = '\\'
+	else:
+		sep = '/'
+
+	comand = ""
+	if use_bootstrap:
+		comando = self.File(use_bootstrap).path + ' -C -q '
+	else:
+		comando = self['TOLUAPP'] + ' -C -q '
+	
+	import os
+	if os.name == 'nt':
+		comando = comando.replace('/', '\\')
+	
+	if export_header:
+		comando = comando + ' -H ' + pheader
+	comando = comando + " $TOLUAFLAGS "
+
+	comando = comando + ' -o ' + ptarget + ' -n ' + pkgname + custom + ' ' + psource
+
+	tfile = self.File('#'+ptarget)
+	#tfile.target_scanner = self.pkgscan
+	com = self.Command(tfile, '#' + psource, comando)
+
+	self.Depends(com, source)
+	if custom_script:
+		if custom_script[0] == '/':
+			self.Depends(com, custom_script)
+		else:
+			self.Depends(com, "#"+custom_script)
+
+	if use_bootstrap:
+		self.Depends(com, use_bootstrap)
+	else:
+		self.Depends(com, "#"+self['TOLUAPP']+self['TOLUA_PROGSUFFIX'])
+		
+			
+	if export_header:
+		self.SideEffect('#' + pheader, '#' + ptarget)
+
+	#self.pkg_scan_dep('#' + ptarget, psource)
+	if list != None:
+		self.add_source_files(list, [target])
+	return com
+
+############ macro stuff ############
+
+import re
+
+def repeat(data, m):
+	
+	sp = m.split()
+	start = 0
+	end = 0
+	
+	def num(s):
+		if data.has_key(s):
+			return int(data[s])
+		else:
+			return int(s)
+	
+	if re.findall("\-", sp[1]):
+		start = num(sp[1].split("-")[0])
+		end = num(sp[1].split("-")[1])
+	else:
+		end = num(sp[1])
+	
+	sep = ""
+	if sp[2] == "sep":
+		sep = sp[3]
+		if sep == "\\n":
+			sep = "\n\t"
+
+	repeat_str = re.findall("\((.*?)\)$", m)[0]
+	ret = ""
+	
+	def repl(m):
+		m = m.group(1)
+		if data.has_key(m):
+			return data[m]
+		else:
+			return ""
+
+	sl = ""
+	for i in range(start, end+1):
+		data['i'] = str(i)
+		line = re.sub("\%([^\%]*)\%", repl, repeat_str)
+
+		ret = ret + sl + line
+		sl = sep
+		
+	data['i'] = None
+	return ret
+
+def replace(input):
+
+	macros = {}
+	
+	def add_macro(m):
+
+		m = m.group(0)
+		
+		macro = {}
+		matchobj = re.match('^\"\"\"\s*([^\n]*)\n([\s\S]*)\"\"\"\s*$', m)
+		plist = matchobj.group(1).split()
+		data = matchobj.group(2)
+		name = plist[0]
+		plist = plist[1:]
+
+		macro['data'] = data
+		macro['params'] = plist
+
+		macros[name] = macro
+		
+		return ""
+	
+	input = re.sub('\"\"\"[\s\S]*?\"\"\"', add_macro, input)
+	
+	def repl(m):
+
+		m = m.group(0)
+		m = re.sub("\$", "", m)
+		l = m.split()
+		name = l[0]
+		values = l[1:]
+		
+		data = {}
+		i=0
+		for k in macros[name]['params']:
+			data[k] = values[i]
+			i=i+1
+		
+		def repl_value(m):
+			
+			m = m.group(0)
+			m = re.sub("\$", "", m)
+			if m.split()[0] == "repeat":
+				return repeat(data, m)
+			else:
+				return data[m]
+		
+		ret = re.sub("\$[^\$]*\$", repl_value, macros[name]['data'])
+		
+		return ret
+		
+	input = re.sub("\$[^\$]*\$", repl, input)
+	
+	return input
+
+def run_macro(target, source, env):
+	
+	macro_in = open(str(source[0]), "rt").read()
+	macro_in = replace(macro_in)
+	out = open(str(target[0]), "w")
+	out.write(macro_in)
+	out.close()
+
+
+def build_shader_header( target, source, env ): 
+	
+	for x in source:
+		print x
+		
+		name = str(x)
+		name = name[ name.rfind("/")+1: ]
+		name = name[ name.rfind("\\")+1: ]
+		name = name.replace(".","_")
+		
+		
+		fs = open(str(x),"r")
+		fd = open(str(x)+".h","w")
+		fd.write("/* this file has been generated by SCons, do not edit! */\n")
+		fd.write("static const char *"+name+"=\n")
+		line=fs.readline()
+		while(line):
+			line=line.replace("\r","")
+			line=line.replace("\n","")
+			line=line.replace("\\","\\\\")
+			line=line.replace("\"","\\\"")
+			fd.write("\""+line+"\\n\"\n")
+			line=fs.readline()
+			
+		fd.write(";\n")
+			
+	return 0
+		
+		
+def build_glsl_header( filename ): 
+		
+	fs = open(filename,"r")	
+	line=fs.readline()
+	
+	vertex_lines=[]
+	fragment_lines=[]
+	uniforms=[]
+	conditionals=[]
+
+	reading=""
+	
+	while(line):
+
+		com = line.find("//")
+		if com != -1:
+			line = line[:com]
+			
+
+		if (line.find("[vertex]")!=-1):
+			reading="vertex"
+			line=fs.readline()
+			continue
+		
+		if (line.find("[fragment]")!=-1):
+			reading="fragment"
+			line=fs.readline()
+			continue
+		
+		if (line.find("#ifdef ")!=-1):
+			ifdefline = line.replace("#ifdef ","").strip()
+			if (not ifdefline in conditionals):
+				conditionals+=[ifdefline]
+				
+		if (line.find("uniform")!=-1):
+			uline = line.replace("uniform","");
+			uline = uline.replace(";","");
+			lines = uline.split(",")
+			for x in lines:
+				
+				x = x.strip()		
+				x = x[ x.rfind(" ")+1: ]		
+				if (not x in uniforms):
+					uniforms+=[x]
+	
+		line=line.replace("\r","")
+		line=line.replace("\n","")
+		line=line.replace("\\","\\\\")
+		line=line.replace("\"","\\\"")
+		line=line+"\\n\\"
+		
+		if (reading=="vertex"):
+			vertex_lines+=[line]
+		if (reading=="fragment"):
+			fragment_lines+=[line]
+			
+		line=fs.readline()
+	fs.close();
+	
+	out_file = filename+".h"
+	fd = open(out_file,"w")
+	
+	fd.write("/* WARNING, THIS FILE WAS GENERATED, DO NOT EDIT */\n");
+	
+	out_file_base = out_file
+	out_file_base = out_file_base[ out_file_base.rfind("/")+1: ]
+	out_file_base = out_file_base[ out_file_base.rfind("\\")+1: ]
+	print("out file "+out_file+" base " +out_file_base)
+	out_file_ifdef = out_file_base.replace(".","_").upper()
+	fd.write("#ifndef "+out_file_ifdef+"\n")
+	fd.write("#define "+out_file_ifdef+"\n")
+	
+	out_file_class = out_file_base.replace(".glsl.h","").title().replace("_","").replace(".","")+"ShaderGL";
+	fd.write("\n\n");
+	fd.write("#include \"drivers/opengl/shader_gl.h\"\n\n\n");
+
+	fd.write("class "+out_file_class+" : public ShaderGL {\n\n");
+	fd.write("\t virtual String get_shader_name() const { return \""+out_file_class+"\"; }\n");
+	fd.write("public:\n\n");
+	
+	if (len(conditionals)):
+		fd.write("\tenum Conditionals {\n");
+		count = 0
+		for x in conditionals:
+			fd.write("\t\t"+x+"\t\t= "+str(count)+",\n");
+			count = count + 1
+		fd.write("\t};\n\n");
+	if (len(uniforms)):
+		fd.write("\tenum Uniforms {\n");
+		count = 0
+		for x in uniforms:
+			fd.write("\t\t"+x.upper()+"\t\t= "+str(count)+",\n");
+			count = count + 1
+		fd.write("\t};\n\n");
+
+	fd.write("\tString get_name() { return \"" + out_file_class + "\"; };\n\n")
+
+	fd.write("\tvirtual void init() {\n\n");
+
+	if (len(conditionals)):
+	
+		fd.write("static const char* _conditional_strings[]={\n")
+		if (len(conditionals)):
+			for x in conditionals:
+				fd.write("\t\"#define "+x+"\\n\",\n");
+		fd.write("};\n\n");
+	else:
+		fd.write("static const char **_conditional_strings=NULL;\n")
+
+	if (len(uniforms)):
+	
+		fd.write("static const char* _uniform_strings[]={\n")
+		if (len(uniforms)):
+			for x in uniforms:
+				fd.write("\t\""+x+"\",\n");
+		fd.write("};\n\n");
+	else:
+		fd.write("static const char **_uniform_strings=NULL;\n")
+		
+	fd.write("static const char* _vertex_code=\"\\\n")
+	for x in vertex_lines:
+		fd.write(x+"\n");
+	fd.write("\";\n\n");
+	
+	fd.write("static const char* _fragment_code=\"\\\n")
+	for x in fragment_lines:
+		fd.write(x+"\n");
+	fd.write("\";\n\n");
+
+	fd.write("\t\tsetup(_conditional_strings,"+str(len(conditionals))+",_uniform_strings,"+str(len(uniforms))+",_vertex_code,_fragment_code);\n")
+
+	fd.write("\t};\n\n")
+	
+	fd.write("};\n\n");
+	fd.write("#endif\n\n");
+	fd.close();
+	
+
+def build_glsl_headers( target, source, env ): 
+	
+	for x in source:
+		
+		build_glsl_header(str(x));
+
+			
+	return 0
+

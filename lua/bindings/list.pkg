@@ -1,0 +1,39 @@
+
+class List {
+
+	TOLUA_TEMPLATE_BIND(T, $TYPE_LIST);
+public:
+
+	class Iterator {
+	public:
+	
+		const Iterator* next() const;
+		Iterator* next();
+		
+		const T& get() const;
+		T& get();
+		void set(const T& p_value);
+		Iterator();
+	};
+	
+	const Iterator* begin() const;
+	Iterator* begin();
+	void push_back(const T& value);
+	void push_front(const T& value);
+	//Iterator* find(const T& p_val);
+	void erase(const Iterator* p_I);
+	//void erase(const T& value);
+	bool empty() const;
+	void clear();
+
+	int size() const;
+
+	T& operator[](int p_index);
+	const T& operator[](int p_index) const;
+
+	List(const List<T>& p_list);
+	
+	List();
+
+	~List();
+};

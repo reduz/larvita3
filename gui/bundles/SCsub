@@ -1,0 +1,7 @@
+Import('env');
+Export('env');
+
+targets=['combo_box.cpp','spin_box.cpp','popup_menu.cpp','option_button.cpp','menu_bar.cpp','margin_group.cpp','tab_box.cpp','menu_box.cpp','file_dialog.cpp','message_box.cpp','window_box.cpp','color_picker.cpp','input_dialog.cpp','scroll_box.cpp', 'list_box.cpp','option_box.cpp'];
+
+for x in targets:
+	env.gui_objects += [env.Object(x)]

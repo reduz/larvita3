@@ -1,0 +1,21 @@
+$#include "gui_bindings/painter_renderer.h"
+class PainterRenderer : public GUI::Painter {
+public:
+	void set_screen_size(GUI::Size p_size);
+	GUI::BitmapID create_bitmap_from_image(const Image& p_image);
+	void draw_cursor(const GUI::Point& p_pos);
+		
+	PainterRenderer();
+	~PainterRenderer();
+};
+
+$ifile "gui_bindings/gui_event_translator.h"
+$#include "gui_bindings/gui_timer.h"
+class GUI_Timer : public GUI::Timer {
+public:
+	void poll();
+	GUI_Timer();	
+	//~GUI_Timer();
+};
+
+

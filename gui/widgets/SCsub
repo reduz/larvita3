@@ -1,0 +1,7 @@
+Import('env');
+Export('env');
+
+targets=['label.cpp','base_button.cpp','button.cpp','line_edit.cpp','slider.cpp','range_owner.cpp','list.cpp','check_button.cpp','progress_bar.cpp','scroll_bar.cpp','arrow_button.cpp','updown.cpp','menu_button.cpp','separator.cpp','button_group.cpp','value_label.cpp','tab_bar.cpp','text_edit.cpp','icon.cpp','window_top.cpp','window_button.cpp','tree.cpp','bitmap_button.cpp','text_view.cpp','custom_label.cpp','knob.cpp'];
+
+for x in targets:
+	env.gui_objects += [env.Object(x)]

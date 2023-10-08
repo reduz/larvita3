@@ -1,0 +1,13 @@
+Import('env')
+
+env.add_source_files("core","*.cpp")
+
+Export('env')
+
+SConscript('libpng/SCsub');
+SConscript('oggvorbis/SCsub');
+SConscript('sqlite3/SCsub');
+#SConscript('libpq/SCsub');
+#SConscript('openssl/SCsub')
+
+

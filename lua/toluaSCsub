@@ -1,0 +1,35 @@
+Import('env')
+Import('env_lua')
+
+sources = [
+        'tolua++/src/lib/tolua_event.c',
+        'tolua++/src/lib/tolua_is.c',
+        'tolua++/src/lib/tolua_map.c',
+        'tolua++/src/lib/tolua_push.c',
+        'tolua++/src/lib/tolua_to.c',
+        ]
+
+env_lua.add_source_files("lua", sources)
+
+Import('env_native')
+
+if not env_native.has_tolua_target:
+	
+	env_native.add_source_files("lua_native", sources)
+	
+	env_tolua_bin = env_native.Copy()
+	
+	obj = env_tolua_bin.Object('tolua++/src/bin/tolua.c')
+
+	libs = []
+	if not ('msvc' in env_native['TOOLS']):
+		libs = ['m']
+	
+	lua_native_lib = env_tolua_bin.Library('lua_native', env_native.lib_objects["lua_native"])
+	env_tolua_bin.tolua_bootstrap_target = env_tolua_bin.Program('#lua/tolua++/src/bin/tolua_bootstrap++5.1', [obj] + ['tolua++/src/bin/toluabind_default.c'] + lua_native_lib, LIBS=libs)
+	
+	env_tolua_bin.LuaBinding('tolua++/src/bin/toluabind.c', 'tolua_larvita3.pkg', 'tolua', use_bootstrap = env_tolua_bin.tolua_bootstrap_target[0])
+	
+	env_tolua_bin.tolua_bin_target = env_tolua_bin.Program("#lua/tolua++/src/bin/"+env_tolua_bin['tolua_bin'], [obj] + ['tolua++/src/bin/toluabind.c'] + lua_native_lib, LIBS=libs)
+
+env_native.has_tolua_target = True

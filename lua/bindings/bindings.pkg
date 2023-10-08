@@ -1,0 +1,82 @@
+
+$#include "defines.h"
+$#include "tolua_base.h"
+$#include "lua/helpers.h"
+
+$pfile "lua/bindings/types_bindings.pkg"
+
+// math stuff
+$pfile "lua/bindings/math_bindings.pkg"
+
+// os
+$pfile "lua/bindings/os_bindings.pkg"
+
+// gui
+$pfile "lua/bindings/gui_bindings.pkg"
+$pfile "lua/bindings/gui_bindings_bindings.pkg"
+
+// engine
+$pfile "lua/bindings/io_bindings.pkg"
+
+// animation
+$pfile "lua/bindings/animation_bindings.pkg"
+
+// scripts
+$pfile "lua/bindings/lua_bindings.pkg"
+
+// scene
+$pfile "lua/bindings/scene_bindings.pkg"
+
+// tools
+$pfile "lua/bindings/tools_bindings.pkg"
+
+// collision
+$pfile "lua/bindings/collision_bindings.pkg"
+
+// physics
+$pfile "lua/bindings/physics_bindings.pkg"
+
+// audio
+$pfile "lua/bindings/audio_bindings.pkg"
+
+// render
+$pfile "lua/bindings/render_bindings.pkg"
+
+// game
+## if GAME_BINDINGS then
+$pfile "$(GAME_BINDINGS)"
+## end
+
+// init bindings
+$pfile "lua/bindings/lua_bindings_init.pkg"
+
+
+${
+
+static int ref = LUA_NOREF;
+void take_ref(lua_State* L, lua_Object lo) {
+
+	if (ref != LUA_NOREF) {
+		printf("unref %i\n", ref);
+		lua_unref(L, ref);
+	};
+	
+	lua_pushvalue(L, lo);
+	ref = lua_ref(L, 1);
+};
+
+lua_Object use_ref(lua_State* L) {
+
+	if (ref == LUA_NOREF) {
+		lua_pushnil(L);
+	} else {
+		lua_getref(L, ref);
+	};
+	
+	return lua_gettop(L);
+};
+
+$}
+
+void take_ref(lua_State* L, lua_Object lo);
+lua_Object use_ref(lua_State* L);

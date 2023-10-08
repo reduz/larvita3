@@ -1,0 +1,14 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'rc2_ecb.c',
+	'rc2_skey.c',
+	'rc2_cbc.c',
+	'rc2cfb64.c',
+	'rc2ofb64.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

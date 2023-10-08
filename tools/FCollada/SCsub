@@ -1,0 +1,59 @@
+Import('env')
+
+collada_so = False
+
+env_collada = env.Copy()
+env_collada.Append(CPPPATH=['#tools/FCollada', '#tools/FCollada/LibXML/include'])
+env_collada.Append(CPPFLAGS=['-D_DEBUG']) #, '-DFCOLLADA_DLL'])
+
+import os
+import sys
+if os.name == 'nt':
+
+	if 'msvc' in env_collada['TOOLS']:
+		env_collada.Append(CPPFLAGS=['-DWIN32'])
+	else:
+		env_collada.Append(CPPFLAGS=['-DLINUX'])
+
+elif (sys.platform == 'darwin'):
+
+	env_collada.Append(CPPFLAGS=['-D__APPLE__'])
+
+else:
+	collada_so = True
+	env_collada.Append(CPPFLAGS=['-DLINUX'])
+
+
+env_collada.make_so = 0
+if collada_so:
+	env_collada.make_so = 1
+env_collada.collada_objs = []
+
+root_so_list = [
+	'DLLEntry.cpp',
+	'FCollada.cpp',
+	'FColladaPlugin.cpp',
+	'StdAfx.cpp',
+	'farchive_xml.cpp',
+	]
+
+env_collada.add_source_files(env_collada.collada_objs, root_so_list, env, shared = env_collada.make_so)
+
+env_collada.add_source_files("tools", ['collada.cpp'], env)
+
+Export('env_collada')
+
+SConscript("FCDocument/SCsub")
+SConscript("FMath/SCsub")
+SConscript("FUtils/SCsub")
+SConscript("LibXML/SCsub")
+#SConscript("FArchiveXML/SCsub")
+
+Import('env')
+if collada_so:
+	env.collada_lib = env_collada.SharedLibrary("#bin/fcollada", env_collada.collada_objs)
+else:
+	env.collada_lib = env_collada.Library("#bin/fcollada", env_collada.collada_objs)
+	
+
+#env_tools.tools_objects += env_collada.collada_objs

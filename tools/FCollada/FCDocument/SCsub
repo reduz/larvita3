@@ -1,0 +1,4 @@
+Import('env')
+Import('env_collada')
+
+env_collada.add_source_files(env_collada.collada_objs, "*.cpp", env, shared = env_collada.make_so)

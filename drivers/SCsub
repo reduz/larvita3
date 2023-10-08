@@ -1,0 +1,11 @@
+Import('env')
+
+#env.add_source_files("core","*.cpp")
+
+Export('env')
+
+SConscript('libc/SCsub');
+SConscript('opengl/SCsub');
+SConscript('sdl/SCsub');
+SConscript('windows/SCsub');
+

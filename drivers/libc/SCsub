@@ -1,0 +1,7 @@
+Import('env')
+
+print("building libc")
+env.add_source_files("drivers","*.cpp")
+
+Export('env')
+

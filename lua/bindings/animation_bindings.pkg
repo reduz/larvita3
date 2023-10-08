@@ -1,0 +1,3 @@
+// animation
+$ifile "animation/animation.h"
+$ifile "animation/animation_set.h"

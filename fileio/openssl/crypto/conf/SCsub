@@ -1,0 +1,16 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'conf_err.c',
+	'conf_lib.c',
+	'conf_api.c',
+	'conf_def.c',
+	'conf_mod.c',
+	'conf_mall.c',
+	'conf_sap.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

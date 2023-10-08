@@ -1,0 +1,14 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'ui_err.c',
+	'ui_lib.c',
+	'ui_openssl.c',
+	'ui_util.c',
+	'ui_compat.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

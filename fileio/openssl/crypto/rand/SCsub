@@ -1,0 +1,18 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'md_rand.c',
+	'randfile.c',
+	'rand_lib.c',
+	'rand_err.c',
+	'rand_egd.c',
+	'rand_win.c',
+	'rand_unix.c',
+	'rand_os2.c',
+	'rand_nw.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

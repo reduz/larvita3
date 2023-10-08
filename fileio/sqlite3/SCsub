@@ -1,0 +1,13 @@
+Import('env')
+
+env_sqlite = env.Clone()
+if env.platform != "sdl":
+	env_sqlite.Append(CPPFLAGS = ['-DOS_OTHER'])
+
+env_sqlite.add_source_files("core","*.c", env)
+env_sqlite.add_source_files("core","*.cpp", env)
+
+Export('env')
+
+
+

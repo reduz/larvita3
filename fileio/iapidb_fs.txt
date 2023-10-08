@@ -1,0 +1,20 @@
+
+Archivos:
+		
+	cada ID esta en un archivo con el nombre del ID, ejemplo
+	1,4,6,12,41, todo en un mismo directorio.
+
+Formato del archivo:
+
+4 bytes: CXID	
+4 bytes: namelen (32 bits)
+namelen byes: name of the object, UTF8, zero included
+3 bytes: typelen (32 bits)
+typelen bytes: type of the object, UTF8, zero included
+4 bytes: dependencylen (32 bits)
+dependencylen * 4 bytes: dependencies (32 bits each)
+4 bytes: creationparamsbloblen
+creationparamsbloblen bytes: creation params
+4 bytes: iapibloblen
+iapibloblen bytes: iapi
+	

@@ -1,0 +1,10 @@
+
+$ifile "math/float/aabb.h"
+$ifile "math/float/face3.h"
+$ifile "math/float/math_defs.h"
+$hfile "math/float/matrix4.h"
+$ifile "math/float/plane.h"
+$ifile "math/float/quat.h"
+$ifile "math/float/rect3.h"
+$ifile "math/float/vector3.h"
+$ifile "math/float/math_funcs.h"

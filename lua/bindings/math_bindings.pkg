@@ -1,0 +1,99 @@
+
+typedef unsigned char Uint8;
+typedef signed char Sint8;
+typedef unsigned short Uint16;
+typedef signed short Sint16;
+typedef unsigned int Uint32;
+typedef signed int Sint32;
+
+//class String {
+//public:
+//	typedef Uint32 CharType;
+//};
+
+struct Color {
+
+	Uint8 r,g,b,a; ///< ranges 0.0 to 255
+
+	Uint32 to_32();
+	void from_32(Uint32 p_col);
+	
+	Color(Uint8 p_r=0,Uint8 p_g=0,Uint8 p_b=0,Uint8 p_a=255) { r=p_r; g=p_g; b=p_b; a=p_a; }
+};
+
+$ifile "types/math/aabb.h"
+$ifile "types/math/convex_group.h"
+$ifile "types/math/face3.h"
+$ifile "types/math/math_defs.h"
+$hfile "types/math/matrix4.h"
+class Matrix4 {
+public:
+	Matrix4(const Matrix4& p_m);
+};
+
+$hfile "types/math/plane.h"
+$ifile "types/math/quat.h"
+$hfile "types/math/rect3.h"
+$hfile "types/math/vector3.h"
+class Vector3 {
+public:
+	Vector3(const Vector3& p_v);
+};
+
+$ifile "types/math/math_funcs.h"
+
+
+// bitwise and & or
+
+${
+
+static int bw_and(lua_State* L) {
+
+	int top = lua_gettop(L);
+	int i=1;
+	unsigned int ret = ~0;
+	while(i <= top) {
+	
+		if (!lua_isnumber(L, i)) {
+			luaL_typerror(L, i, "number");
+		};
+		ret = ret & (int)lua_tonumber(L, i);
+		i++;
+	};
+	
+	lua_pushnumber(L, (int)ret);
+	
+	return 1;
+};
+
+static int bw_or(lua_State* L) {
+
+	int top = lua_gettop(L);
+	int i=1;
+	unsigned int ret = 0;
+	
+	while(i <= top) {
+	
+		if (!lua_isnumber(L, i)) {
+			luaL_typerror(L, i, "number");
+		};
+		ret = ret | (int)lua_tonumber(L, i);
+		i++;
+	};
+	
+	lua_pushnumber(L, (int)ret);
+	
+	return 1;
+};
+
+$}
+
+$<
+
+tolua_function(tolua_S, "bw_and", bw_and);
+tolua_function(tolua_S, "bw_or", bw_or);
+
+$>
+
+$ifile "types/math/spline.h"
+

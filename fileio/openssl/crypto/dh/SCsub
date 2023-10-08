@@ -1,0 +1,16 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'dh_asn1.c',
+	'dh_gen.c',
+	'dh_key.c',
+	'dh_lib.c',
+	'dh_check.c',
+	'dh_err.c',
+	'dh_depr.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+

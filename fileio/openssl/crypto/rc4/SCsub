@@ -1,0 +1,11 @@
+Import('env_fileio')
+Import('env_openssl')
+
+objects = [
+	'rc4_skey.c',
+	'rc4_enc.c',
+	]
+
+if len(objects) > 0:
+	env_openssl.make_targets(env_fileio.fileio_objects,objects)
+
