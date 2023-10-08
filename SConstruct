@@ -100,6 +100,7 @@ env_native.Append(CPPPATH=['#types','#types/string','#types/iapi','#types/math',
 #env.Append(LIBPATH=['#drivers','#gui_app','#gui_common','#editor','#engine','#gui','#types']);
 
 env_native.Append(CXXFLAGS=['-DGUI_EXTERNAL_STRING="\\\"types/string/rstring.h\\\""','-DGUI_EXTERNAL_MEMORY="\\\"gui_bindings/gui_memory.h\\\""']);
+env_native.Append(CXXFLAGS=['-std=c++98'])
 env_native.platforms = {}
 
 Export('env_native')
