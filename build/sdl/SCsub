@@ -16,7 +16,7 @@ if (sys.platform == 'darwin'):
 	osxlib = env.Library("osxmain",["sdl_main_osx.m"])
 	env.Append(LIBS=[osxlib])
 
-env.Program('#bin/tests_sdl', ['tests_sdl.cpp']);
+#env.Program('#bin/tests_sdl', ['tests_sdl.cpp']);
 env.Program('#bin/editor_sdl', ['editor_sdl.cpp']);
 
 if env['optimize']:
