@@ -15,7 +15,7 @@
 #ifdef SDL_ENABLED
 
 #include "audio/audio_server_software.h"
-#include <SDL/SDL.h>
+#include <SDL.h>
 /**
 	@author Juan Linietsky <reduzio@gmail.com>
 */

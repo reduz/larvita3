@@ -14,7 +14,7 @@
 
 #ifdef SDL_ENABLED
 #include "os/input_event.h"
-#include <SDL/SDL_events.h>
+#include <SDL_events.h>
 #include "os/keyboard.h"
 
 /**
