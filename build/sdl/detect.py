@@ -85,8 +85,11 @@ def configure(env):
 
 			env.Append(LINKFLAGS=['/NODEFAULTLIB:msvcrt', '/DEBUG'])
 			env.Append(LIBS=['sdl', 'sdlmain'])
-
-		env.Append(LIBS=['glew32', 'opengl32', 'wsock32', 'winmm', 'shell32'])
+		
+		if env['enable_glew']:
+			env.Append(LIBS=['glew32', 'opengl32', 'wsock32', 'winmm', 'shell32'])
+		else:
+			env.Append(LIBS=['opengl32', 'wsock32', 'winmm', 'shell32'])
 		
 	elif (sys.platform == 'darwin'):
 
