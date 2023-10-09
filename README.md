@@ -30,7 +30,7 @@ Compiling with mingw or any newer versions of Visual Studio is untested.
 
 Install Python 2.7 to `C:\Python27` or wherever works best for you.
 
-Install SCons build system 2.5.1 to Python 2.7.
+Install SCons build system 2.5.1 from [SourceForge](https://sourceforge.net/projects/scons/files/scons/2.5.1/) to Python 2.7.
 
 Make sure `C:\Python27\` and `C:\Python27\Scripts\` are in your system PATH. You should be able to type `scons -ver` into CMD to see if it worked.
 
