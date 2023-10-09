@@ -1,6 +1,11 @@
+# rando compile files
 *.obj
 *.lib
 .sconsign.dblite
 *.pdb
 *.exe
 *.pyc
+
+# tolua elf binaries that shouldn't be included
+lua/tolua++/src/bin/tolua++5.1
+lua/tolua++/src/bin/tolua_bootstrap++5.1
