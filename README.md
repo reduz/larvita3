@@ -38,7 +38,11 @@ Download SDL-devel-1.2.15-VC.zip from [SourceForge](https://sourceforge.net/proj
 
 Install Visual C++ 2008 Express from [here](http://download.microsoft.com/download/8/B/5/8B5804AD-4990-40D0-A6AA-CE894CBBB3DC/VS2008ExpressENUX1397868.iso]). Make sure you install it to the C drive!
 
-If you have downloaded or cloned this repository to your computer, you should be able to just run `scons` in the command prompt at the root of the larvita3 directory.
+Next, make sure you have the repository cloned or downloaded some placed on your computer.
+
+Run "Visual Studio 2008 Command Prompt" by searching for it in windows. If it doesn't show up, you can also run `"C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86` in CMD to bring it up.
+
+Change the directory of CMD to the larvita3 folder you just downloaded. You should be able to just run `scons` in the command prompt at the root of the larvita3 directory to compile everything.
 
 If all goes well, you now have a working Larvita3 engine compilation.
 
