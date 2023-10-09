@@ -62,7 +62,7 @@ typedef unsigned int size_t;
  * libSDL uses the same convention, so if libSDL is in use, we just use SDL ones.
  */
 #ifdef SDL_ENABLED
-#include <SDL/SDL.h>
+#include <SDL.h>
 #else
 typedef unsigned char   Uint8;
 typedef signed char     Sint8;
