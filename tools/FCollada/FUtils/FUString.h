@@ -56,7 +56,7 @@ namespace fm
 		stringT(const CH* c) : Parent()
 		{
 			append(c);
-			if (c == NULL || (*c) == 0) push_back((CH) 0);
+			if (c == NULL || (*c) == 0) this->push_back((CH) 0);
 		}
 
 		/** Copy constructor.
@@ -76,7 +76,7 @@ namespace fm
 			else
 			{
 				append(c);
-				if (c == NULL || (*c) == 0) push_back((CH) 0);
+				if (c == NULL || (*c) == 0) this->push_back((CH) 0);
 			}
 		}
 
