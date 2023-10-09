@@ -67,7 +67,7 @@ opts.Add('game', 'Game directory', False)
 opts.Add('GAME_BINDINGS', 'Game bindings', "")
 
 opts.Add('enable_collada', 'Enable collada', True)
-opts.Add('enable_postgres', 'Enable postgres', True)
+opts.Add('enable_postgres', 'Enable postgres', False)
 opts.Add('enable_ssl', 'Enable ssl', True)
 opts.Add('enable_glew', 'Use glew instead lf GLee', False)
 
@@ -86,9 +86,9 @@ Help(opts.GenerateHelpText(env_native)) # generate help
 
 if 'msvc' in env_native['TOOLS']:
 	env_native.Append(CPPFLAGS=['/DMSVC'])
-	env_native['ENV']['INCLUDE'] = "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\include;C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\atlmfc\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include\\SDL"
-	env_native['ENV']['PATH'] = env_native['ENV']['PATH'] + ";C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\bin;C:\\Program Files\\Microsoft Visual Studio 9.0\\Common7\\IDE"
-	env_native['ENV']['LIB'] = "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\lib;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\Lib;"
+	env_native['ENV']['INCLUDE'] = "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\include;C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\atlmfc\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include\\SDL"
+	env_native['ENV']['PATH'] = env_native['ENV']['PATH'] + ";C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\Common7\\IDE"
+	env_native['ENV']['LIB'] = "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\lib;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\Lib;"
 	#print("env is "+str(env_native['ENV']))
 
 	

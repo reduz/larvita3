@@ -24,9 +24,9 @@ def configure(env):
 		env.Append(CPPFLAGS=['/DMSVC', '/GR', ])
 		env.Append(CXXFLAGS=['/TP'])
 		env.Append(CCFLAGS=['/MT','/Gd'])
-		env['ENV']['INCLUDE'] = "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\include;C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\atlmfc\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include\\SDL"
-		env['ENV']['PATH'] = env['ENV']['PATH'] + ";C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\bin;C:\\Program Files\\Microsoft Visual Studio 9.0\\Common7\\IDE"
-		env['ENV']['LIB'] = "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\lib;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\Lib;"
+		env['ENV']['INCLUDE'] = "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\include;C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\atlmfc\\include;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\include;C:\\SDL\\include"
+		env['ENV']['PATH'] = env['ENV']['PATH'] + ";C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\Common7\\IDE"
+		env['ENV']['LIB'] = "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\lib;C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\Lib;C:\\SDL\\lib\\x86"
 		#print("env is "+str(env['ENV']))
 
 		if (env["profile"]):
@@ -76,7 +76,7 @@ def configure(env):
 	
 		env['enable_ssl'] = 0
 		env.Append(CPPFLAGS=['-DWINDOWS_ENABLED', '-DWIN32_ENABLED', '-DWIN32']);
-		env['enable_glew'] = 1
+		#env['enable_glew'] = 1
 		if env['enable_postgres']:
 			env.Append(LIBS=['pq'])
 		if env['enable_ssl']:
