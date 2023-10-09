@@ -4,3 +4,4 @@ __pycache__
 *.a
 *.so
 bin/script_exec
+bin/editor_sdl
