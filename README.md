@@ -2,7 +2,7 @@
 Larvita 3 Game Engine
 
 This game engine is the precursor of [Godot Engine](http://www.godotengine.org) developed by Ariel Manzur and Juan Linietsky.
-It was used for a couple of games and prototypes, most notably (Atmosphir)[https://www.youtube.com/watch?v=DvQsmPC27VU].
+It was used for a couple of games and prototypes, most notably [Atmosphir](https://www.youtube.com/watch?v=DvQsmPC27VU).
 
 ![larvita2](https://github.com/reduz/larvita3/assets/6265307/6687cd24-0751-4e11-b779-8acfd3db93e9)
 ![image](https://github.com/reduz/larvita3/assets/6265307/2ffce16d-e9e6-4ba7-bed4-ee00cacd8bf0)
