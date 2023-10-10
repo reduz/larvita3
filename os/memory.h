@@ -102,7 +102,7 @@ void *operator new[] (size_t,const char *p_description,void **p_real_address);  
 
 #ifdef DEBUG_MEMORY_ALLOC
 
-#define memnew_arr( m_class, m_count ) memnew_arr_template<m_class>(m_count,__FILE__":"__STR(__LINE__)", type: "_STR(m_class))
+#define memnew_arr( m_class, m_count ) memnew_arr_template<m_class>(m_count,__FILE__":" __STR(__LINE__) ", type: " _STR(m_class))
 
 #else
 

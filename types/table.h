@@ -431,7 +431,7 @@ public:
 		} else { /* get the next key */
 			
 			const Entry *e = get_entry( *p_key );
-			ERR_FAIL_COND_V( !e, false ); /* invalid key supplied */
+			ERR_FAIL_COND_V( !e, NULL ); /* invalid key supplied */
 			
 			if (e->next) {
 				/* if there is a "next" in the list, return that */

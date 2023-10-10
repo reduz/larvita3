@@ -17,7 +17,7 @@ if not env_native.has_tolua_target:
 	
 	env_native.add_source_files("lua_native", sources)
 	
-	env_tolua_bin = env_native.Copy()
+	env_tolua_bin = env_native.Clone()
 	
 	obj = env_tolua_bin.Object('tolua++/src/bin/tolua.c')
 

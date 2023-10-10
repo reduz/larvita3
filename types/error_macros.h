@@ -27,7 +27,7 @@ void print_error(const char* p_file,int p_line,const char *p_error);
 
 #define ERR_FAIL_INDEX(m_index,m_size) \
 	 do {if ((m_index)<0 || (m_index)>=(m_size)) { \
-		print_error(__FILE__,__LINE__,"Index "_STR(m_index)" out of size ("_STR(m_size)").");	\
+		print_error(__FILE__,__LINE__,"Index " _STR(m_index) " out of size (" _STR(m_size) ").");	\
 		return;	\
 	}} while(0);	\
 
@@ -38,7 +38,7 @@ void print_error(const char* p_file,int p_line,const char *p_error);
 
 #define ERR_FAIL_INDEX_V(m_index,m_size,m_retval) \
 	 do {if ((m_index)<0 || (m_index)>=(m_size)) { \
-		print_error(__FILE__,__LINE__,"Index "_STR(m_index)" out of size ("_STR(m_size)").");	\
+		print_error(__FILE__,__LINE__,"Index " _STR(m_index) " out of size (" _STR(m_size) ").");	\
 		return m_retval;	\
 	}} while (0);
 
@@ -48,7 +48,7 @@ void print_error(const char* p_file,int p_line,const char *p_error);
 
 #define ERR_FAIL_COND(m_cond) \
 	{ if ( m_cond ) {	\
-		print_error(__FILE__,__LINE__,"Condition ' "_STR(m_cond)" ' failed.");	\
+		print_error(__FILE__,__LINE__,"Condition ' " _STR(m_cond) " ' failed.");	\
 		return;	 \
 	} }	\
 
@@ -60,7 +60,7 @@ void print_error(const char* p_file,int p_line,const char *p_error);
 
 #define ERR_FAIL_COND_V(m_cond,m_retval) \
 	{ if ( m_cond ) {	\
-		print_error(__FILE__,__LINE__,"Condition ' "_STR(m_cond)" ' failed. returned: "_STR(m_retval));	\
+		print_error(__FILE__,__LINE__,"Condition ' " _STR(m_cond) " ' failed. returned: " _STR(m_retval));	\
 		return m_retval;	 \
 	} }	\
 
@@ -70,7 +70,7 @@ void print_error(const char* p_file,int p_line,const char *p_error);
 
 #define ERR_CONTINUE(m_cond) \
 	{ if ( m_cond ) {	\
-		print_error(__FILE__,__LINE__,"Condition ' "_STR(m_cond)" ' failed. Continuing..:");	\
+		print_error(__FILE__,__LINE__,"Condition ' " _STR(m_cond) " ' failed. Continuing..:");	\
 		continue;\
 	} }	\
 
@@ -88,7 +88,7 @@ void print_error(const char* p_file,int p_line,const char *p_error);
 
 #define ERR_FAIL_V(m_value) \
 { \
-		print_error(__FILE__,__LINE__,"Method/Function Failed, returning: "__STR(m_value));	\
+		print_error(__FILE__,__LINE__,"Method/Function Failed, returning: " __STR(m_value));	\
 		return m_value;\
 } \
 

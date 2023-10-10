@@ -10,7 +10,6 @@
 //
 //
 #include "setup_sdl.h"
-#include "bin/tests/test_main.h"
 
 #include "drivers/libc/file_access_posix.h"
 #include "drivers/windows/file_access_windows.h"
@@ -109,7 +108,7 @@ void init_sdl(int argc, char *argv[]) {
 		Thread_SDL::set_as_default();
 		Mutex_SDL::set_as_default();
 		Semaphore_SDL::set_as_default();
-		Renderer_GL14::set_as_default();
+		Renderer_GL2::set_as_default();
 		Main_SDL::set_as_default();
 #ifdef POSIX_ENABLED
 		FileAccessPosix::set_as_default();

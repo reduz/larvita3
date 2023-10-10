@@ -55,7 +55,7 @@ uniform float zfar;
 
 vec2 pack_depth(float v) {
 	float ret = -v / zfar * 256.0;
-	return vec2(floor(ret) / 256.0, frac(ret));
+	return vec2(floor(ret) / 256.0, fract(ret));
 };
 
 vec2 pack_normal(vec3 normal) {

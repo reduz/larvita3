@@ -27,7 +27,7 @@ for x in glob.glob("build/*"):
 	sys.modules.pop('detect')
 			
 		
-print platform_list	
+print(platform_list)
 
 import methods
 scanners = Environment().Dictionary('SCANNERS')
@@ -50,7 +50,7 @@ env_native.__class__.LuaBinding = methods.make_tolua_code
 env_native.__class__.add_source_files = methods.add_source_files
 env_native.has_tolua_target = False
 
-opts=Options(['custom.py'], ARGUMENTS)
+opts=Variables(['custom.py'], ARGUMENTS)
 opts.Add('optimize', 'Optimize (0|1).', 0)
 opts.Add('profile', 'Profile (0|1).', 0)
 opts.Add('debug', 'Add debug symbols (0|1).', 1)
@@ -67,9 +67,9 @@ opts.Add('game', 'Game directory', False)
 opts.Add('GAME_BINDINGS', 'Game bindings', "")
 
 opts.Add('enable_collada', 'Enable collada', True)
-opts.Add('enable_postgres', 'Enable postgres', True)
-opts.Add('enable_ssl', 'Enable ssl', True)
-opts.Add('enable_glew', 'Use glew instead lf GLee', False)
+opts.Add('enable_postgres', 'Enable postgres', False)
+opts.Add('enable_ssl', 'Enable ssl', False)
+opts.Add('enable_glew', 'Use glew instead lf GLee', True)
 
 env_native['TOLUA_PROGSUFFIX'] = env_native['PROGSUFFIX']
 
@@ -100,6 +100,7 @@ env_native.Append(CPPPATH=['#types','#types/string','#types/iapi','#types/math',
 #env.Append(LIBPATH=['#drivers','#gui_app','#gui_common','#editor','#engine','#gui','#types']);
 
 env_native.Append(CXXFLAGS=['-DGUI_EXTERNAL_STRING="\\\"types/string/rstring.h\\\""','-DGUI_EXTERNAL_MEMORY="\\\"gui_bindings/gui_memory.h\\\""']);
+env_native.Append(CXXFLAGS=['-std=c++11', '-w'])
 env_native.platforms = {}
 
 Export('env_native')

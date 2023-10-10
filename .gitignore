@@ -1,0 +1,7 @@
+.sconsign.dblite
+__pycache__
+*.o
+*.a
+*.so
+bin/script_exec
+bin/editor_sdl

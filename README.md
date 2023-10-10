@@ -11,6 +11,12 @@ It was used for a couple of games and prototypes, most notably (Atmosphir)[https
 
 #### Compilation
 
+Dependencies that work on Ubuntu 22.04:
+
+```
+sudo apt install scons libsdl1.2-dev libglew-dev
+```
+
 I have no idea, please update instructions.
 I think it went something like:
 
