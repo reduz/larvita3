@@ -71,3 +71,5 @@ There is none.
 
 Our previous engine was called "Larvotor" (used for Regnum Online). This was originally a 3D engine aimed to run on the Nintendo 3DS, hence the name "Larvita" (Larvita 1 was a prototype engine for that platform). Life happened and we ended up getting to work for clients wanting to make PC games.
 
+An explanation of Larvita 3 design and how we moved from it to Godot can be [read here](https://gist.github.com/reduz/9b9d1278848237fd9a9a8b6cc77c8270).
+
