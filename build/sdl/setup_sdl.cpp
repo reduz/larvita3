@@ -10,7 +10,7 @@
 //
 //
 #include "setup_sdl.h"
-#include "bin/tests/test_main.h"
+//#include "bin/tests/test_main.h"
 
 #include "drivers/libc/file_access_posix.h"
 #include "drivers/windows/file_access_windows.h"

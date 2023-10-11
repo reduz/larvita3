@@ -14,8 +14,8 @@
 
 #ifdef SDL_ENABLED
 
-#include "SDL/SDL.h"
-#include "SDL/SDL_thread.h"
+#include "SDL.h"
+#include "SDL_thread.h"
 #include "os/thread.h"
 
 /**

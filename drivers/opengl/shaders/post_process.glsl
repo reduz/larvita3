@@ -108,8 +108,8 @@ void main() {
 	vec4 fragment = texture2D( screen_texture, gl_TexCoord[0].st );
 	
 	#ifdef BLUR_ENABLED
-	vec4 blur = texture2D( blur_texture, gl_TexCoord[0].st );
-	fragment.rgb+=pow(blur.rgb, 1.4)*4.0;
+	//vec4 blur = texture2D( blur_texture, gl_TexCoord[0].st );
+	//fragment.rgb+=pow(blur.rgb, 1.4)*4.0;
 	#endif
 
 	#ifdef SSAO_ENABLED

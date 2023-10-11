@@ -14,7 +14,7 @@
 
 #ifdef SDL_ENABLED
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include "drivers/sdl/event_translator_sdl.h"
 #include "main/main.h"
 #include "render/renderer.h"
