@@ -34,7 +34,7 @@ Install SCons build system 2.5.1 from [SourceForge](https://sourceforge.net/proj
 
 Make sure `C:\Python27\` and `C:\Python27\Scripts\` are in your system PATH. You should be able to type `scons -ver` into CMD to see if it worked.
 
-Download SDL-devel-1.2.15-VC.zip from [SourceForge](https://sourceforge.net/projects/libsdl/files/SDL/1.2.15/) and extract the contents of the folder within to `C:\SDL\`. `C:\SDL\include\` and `C:\SDL\lib\` should exist in those places if done correctly.
+Download SDL-devel-1.2.13-VC8.zip from [SourceForge](https://sourceforge.net/projects/libsdl/files/SDL/1.2.13/) and extract the contents of the folder within to `C:\SDL\`. `C:\SDL\include\` and `C:\SDL\lib\` should exist in those places if done correctly.
 
 Install Visual C++ 2008 Express from [here](http://download.microsoft.com/download/8/B/5/8B5804AD-4990-40D0-A6AA-CE894CBBB3DC/VS2008ExpressENUX1397868.iso]). Make sure you install it to the C drive!
 
