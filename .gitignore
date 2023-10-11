@@ -4,6 +4,7 @@
 .sconsign.dblite
 *.pdb
 *.exe
+*.exe.manifest
 *.pyc
 *.exp
 *.ilk
